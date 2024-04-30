@@ -12,14 +12,14 @@ class personal{
     private $restutage;
 
     public function __construct($pid,$name,$passwort,$status,$uid,$kid,$utage,$restutage){
-        $this-> pid = $pid;
-        $this-> name = $name;
-        $this-> passwort = $passwort;
-        $this-> status = $status;
-        $this-> uid = $uid;
-        $this-> kid = $kid;
-        $this-> utage = $utage;
-        $this-> restutage = $restutage;
+        $this->pid = $pid;
+        $this->name = $name;
+        $this->passwort = $passwort;
+        $this->status = $status;
+        $this->uid = $uid;
+        $this->kid = $kid;
+        $this->utage = $utage;
+        $this->restutage = $restutage;
     }
 
     public function getPid(){
