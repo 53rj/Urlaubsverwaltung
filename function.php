@@ -3,7 +3,8 @@
 class personal{
 
     private $pid;
-    private $name;
+    private $vorname;
+    private $nachname;
     private $passwort;
     private $status;
     private $uid;
@@ -11,9 +12,10 @@ class personal{
     private $utage;
     private $restutage;
 
-    public function __construct($pid,$name,$passwort,$status,$uid,$kid,$utage,$restutage){
+    public function __construct($pid,$vorname,$nachname,$passwort,$status,$uid,$kid,$utage,$restutage){
         $this->pid = $pid;
-        $this->name = $name;
+        $this->vorname = $vorname;
+        $this->nachname = $nachname;
         $this->passwort = $passwort;
         $this->status = $status;
         $this->uid = $uid;
@@ -29,12 +31,18 @@ class personal{
         $this->pid = $newPid;
     }
 
+    public function getVorname(){
+        return $this->vorname;
+    }
+    public function setVorname($newVorname){
+        $this->vorname = $newVorname;
+    }
 
     public function getName(){
-        return $this->name;
+        return $this->nachname;
     }
     public function setName($newName){
-        $this->name = $newName;
+        $this->nachname = $newName;
     }
 
 
@@ -84,26 +92,28 @@ class personal{
     public function setRestutage($newRestutage){
         $this->restutage = $newRestutage;
     }
-    
+
+}
+
     function checkuser(){
 
         connServer();
 
         $sql = "SELECT * FROM personal";
         foreach ($conn->query($sql) as $i) {
-        echo "".$i["uid"].";"."".$i["name"].";"."".$i["email"].";"."".$i["rolle"]."";
+        echo "".$i["pid"].";"."".$i["nachname"].";"."".$i["passwort"].";"."".$i["status"]."";
         echo "<br></br>";
 
-        if($i["name"]== $name && $i["email"]== $email && $i["status"]== 1){
-            echo "Ihr Personal login war erfolgreich, Sie Können jetzt Ihren Urlaubsantrag stellen";
+        if($i["nachname"]== $nachname && $i["passwort"]== $passwort && $i["status"]== 1){
+            echo "Ihr Personal login war erfolgreich, Sie Können jetzt einen Urlaubsantrag stellen";
         }
         
-        if($i["name"]== $name && $i["email"]== $email && $i["status"]== 2){
-            echo "Ihr Personalleiter login war erfolgreich, Sie Können jetzt Ihren Urlaubsantrag stellen";
+        if($i["nachname"]== $nachname && $i["passwort"]== $passwort && $i["status"]== 2){
+            echo "Ihr Personalleiter login war erfolgreich, Sie Können jetzt einen Urlaubsantrag stellen";
         }
 
-        if($i["name"]== $name && $i["email"]== $email && $i["status"]== 3){
-            echo "Ihr Admin login war erfolgreich, Sie Können jetzt Ihren Urlaubsantrag stellen";
+        if($i["nachname"]== $nachname && $i["passwort"]== $passwort && $i["status"]== 3){
+            echo "Ihr Admin login war erfolgreich, Sie Können jetzt einen Urlaubsantrag stellen";
         }
         $conn = null;
 
@@ -117,8 +127,36 @@ class personal{
         $password = "";
         $dbname = "urlaubsverwaltung";      
         $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $passwort);
+        return $conn;
     }
-}
 
+    function showData($zahl){
+        connServer();
+        
+        if ($zahl == 1){
+            $sql = "SELECT * FROM personal";
+            foreach ($conn->query($sql) as $i){
+                echo "".$i["pid"].";"."".$i["vorname"].";"."".$i["nachname"].";"."".$i["passwort"].";"."".$i["status"].";"."".$i["urlaubstage"].";"."".$i["resturlaub"]."";
+                echo "<br></br>";
+            }
+        }
 
+        if ($zahl == 2){
+            $sql = "SELECT * FROM krankheit";
+            foreach ($conn->query($sql) as $i){
+                echo "".$i["kid"].";"."".$i["pid"].";"."".$i["kanfang"].";"."".$i["kende"].";"."".$i["kgesamt"].";"."";
+                echo "<br></br>";
+            }
+        }
+
+        if ($zahl == 3){
+            $sql = "SELECT * FROM urlaubsantrag";
+            foreach ($conn->query($sql) as $i){
+                echo "".$i["uid"].";"."".$i["pid"].";"."".$i["uanfang"].";"."".$i["uende"].";"."".$i["ubeantragt"].";"."".$i["ugenommen"].";"."".$i["ugesamt"].";"."".$i["ustatus"]."";
+                echo "<br></br>";
+            }
+        }
+
+        $conn = null;
+    }
 ?>
