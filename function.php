@@ -85,6 +85,35 @@ class personal{
         $this->restutage = $newRestutage;
     }
     
+    function checkuser(){
+
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+        $dbname = "urlaubsverwaltung";      
+        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $passwort);
+
+        $sql = "SELECT * FROM personal";
+        foreach ($conn->query($sql) as $i) {
+        echo "".$i["uid"].";"."".$i["name"].";"."".$i["email"].";"."".$i["rolle"]."";
+        echo "<br></br>";
+
+        if($i["name"]== $name && $i["email"]== $email && $i["status"]== 1){
+            echo "Ihr Personal login war erfolgreich, Sie Können jetzt Ihren Urlaubsantrag stellen";
+        }
+        
+        if($i["name"]== $name && $i["email"]== $email && $i["status"]== 2){
+            echo "Ihr Personalleiter login war erfolgreich, Sie Können jetzt Ihren Urlaubsantrag stellen";
+        }
+
+        if($i["name"]== $name && $i["email"]== $email && $i["status"]== 3){
+            echo "Ihr Admin login war erfolgreich, Sie Können jetzt Ihren Urlaubsantrag stellen";
+        }
+        $conn = null;
+
+        }
+
+    }
 }
 
 
