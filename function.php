@@ -87,11 +87,7 @@ class personal{
     
     function checkuser(){
 
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $dbname = "urlaubsverwaltung";      
-        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $passwort);
+        connServer();
 
         $sql = "SELECT * FROM personal";
         foreach ($conn->query($sql) as $i) {
@@ -113,6 +109,14 @@ class personal{
 
         }
 
+    }
+
+    function connServer(){
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+        $dbname = "urlaubsverwaltung";      
+        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $passwort);
     }
 }
 
