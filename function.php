@@ -38,10 +38,10 @@ class personal{
         $this->vorname = $newVorname;
     }
 
-    public function getName(){
+    public function getNachame(){
         return $this->nachname;
     }
-    public function setName($newName){
+    public function setnachname($newName){
         $this->nachname = $newName;
     }
 
@@ -124,8 +124,6 @@ function checkuser(){
     if($i["nachname"]== $nachname && $i["passwort"]== $passwort && $i["status"]== 3){
         echo "Ihr Admin login war erfolgreich";
     }
-    $conn = null;
-
     }
 }
 
@@ -156,7 +154,6 @@ function showData($zahl){
             echo "<br></br>";
         }
     }
-    $conn = null;
 }
 
 
