@@ -3,7 +3,7 @@
 class personal{
     private $pid;
     private $vorname;
-    private $nachname;
+    private $pid;
     private $passwort;
     private $status;
     private $uid;
@@ -11,10 +11,10 @@ class personal{
     private $utage;
     private $restutage;
 
-    public function __construct($pid,$vorname,$nachname,$passwort,$status,$uid,$kid,$utage,$restutage){
+    public function __construct($pid,$vorname,$pid,$passwort,$status,$uid,$kid,$utage,$restutage){
         $this->pid = $pid;
         $this->vorname = $vorname;
-        $this->nachname = $nachname;
+        $this->pid = $pid;
         $this->passwort = $passwort;
         $this->status = $status;
         $this->uid = $uid;
@@ -38,10 +38,10 @@ class personal{
     }
 
     public function getNachame(){
-        return $this->nachname;
+        return $this->pid;
     }
     public function setnachname($newName){
-        $this->nachname = $newName;
+        $this->pid = $newName;
     }
 
     public function getPasswort(){
@@ -100,6 +100,7 @@ class krank{
         $this->kanfang = $kanfang;
         $this->kende = $kende;
         $this->kgesamt = $kgesamt;
+    }
 
         public function getKid(){
             return $this->kid;
@@ -135,7 +136,6 @@ class krank{
         public function setKgesamt($newKgesamt){
             $this->kgesamt = $newKgesamt;
         }
-    }
 }
 
 class urlaubsantrag{
@@ -144,20 +144,18 @@ class urlaubsantrag{
     private $uanfang;
     private $uende;
     private $ubeantragt;
-    private $ugenommen;
     private $ugesamt;
     private $ustatus;
     
-    public function __construct($uid,$pid,$uanfang,$uende,$ubeantragt,$ugenommen,$ugesamt,$ustatus){
+    public function __construct($uid,$pid,$uanfang,$uende,$ubeantragt,$ugesamt,$ustatus){
         $this->uid = $uid;
         $this->pid = $pid;
         $this->uanfang = $uanfang;
         $this->uende = $uende;
         $this->ubeantragt = $ubeantragt;
-        $this->ugenommen = $ugenommen;
         $this->ugesamt = $ugesamt;
         $this->ustatus = $ustatus;
-
+    }
 
         public function getUid(){
             return $this->uid;
@@ -194,13 +192,6 @@ class urlaubsantrag{
             $this->ubeantragt = $newUbeantragt;
         }
 
-        public function getUgenommen(){
-            return $this->ugenommen;
-        }
-        public function setUgenommen($newUgenommen){
-            $this->ugenommen = $newUgenommen;
-        }
-
         public function getUgesamt(){
             return $this->ugesamt;
         }
@@ -214,49 +205,47 @@ class urlaubsantrag{
         public function setUstatus($newUstatus){
             $this->ustatus = $newUstatus;
         }
-    }
 }
 
 function connServer(){
     $servername = "localhost";
     $username = "root";
-    $password = "";
+    $passwort = "";
     $dbname = "urlaubsverwaltung";      
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $passwort);
-    return $conn;
 }
 
 
 function checkuser(){
-    connServer();
+    $conn = connServer();
 
     $sql = "SELECT * FROM personal";
     foreach ($conn->query($sql) as $i) {
-    echo "".$i["pid"].";"."".$i["nachname"].";"."".$i["passwort"].";"."".$i["status"]."";
+    echo "".$i["pid"].";"."".$i["passwort"].";"."".$i["status"]."";
     echo "<br></br>";
 
-    if($i["nachname"]== $nachname && $i["passwort"]== $passwort && $i["status"]== 1){
-        echo "Ihr Personal login war erfolgreich, Sie Können jetzt einen Urlaubsantrag stellen";
+    if($i["pid"]== $pid && $i["passwort"]== $passwort && $i["status"]== 1){
+        echo "Ihr login für Personal war erfolgreich, Sie Können jetzt einen Urlaubsantrag stellen";
     }
     
-    if($i["nachname"]== $nachname && $i["passwort"]== $passwort && $i["status"]== 2){
-        echo "Ihr Personalleiter login war erfolgreich, Sie Können jetzt einen Urlaubsantrag stellen";
+    if($i["pid"]== $pid && $i["passwort"]== $passwort && $i["status"]== 2){
+        echo "Ihr login als Personalleiter war erfolgreich, Sie Können jetzt einen Urlaubsantrag stellen";
     }
 
-    if($i["nachname"]== $nachname && $i["passwort"]== $passwort && $i["status"]== 3){
-        echo "Ihr Admin login war erfolgreich";
+    if($i["pid"]== $pid && $i["passwort"]== $passwort && $i["status"]== 3){
+        echo "Ihr login als Admin war erfolgreich";
     }
     }
 }
 
 
 function showAllData($zahl){
-    connServer();
+    $conn = connServer();
     
     if ($zahl == 1){
         $sql = "SELECT * FROM personal";
         foreach ($conn->query($sql) as $i){
-            echo "".$i["pid"].";"."".$i["vorname"].";"."".$i["nachname"].";"."".$i["passwort"].";"."".$i["status"].";"."".$i["urlaubstage"].";"."".$i["resturlaub"]."";
+            echo "".$i["pid"].";"."".$i["vorname"].";"."".$i["pid"].";"."".$i["passwort"].";"."".$i["status"].";"."".$i["urlaubstage"].";"."".$i["resturlaub"]."";
             echo "<br></br>";
         }
     }
@@ -277,6 +266,8 @@ function showAllData($zahl){
         }
     }
 }
+
+
 
 
 ?>
