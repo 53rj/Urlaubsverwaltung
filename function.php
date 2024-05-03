@@ -3,7 +3,7 @@
 class personal{
     private $pid;
     private $vorname;
-    private $pid;
+    private $nachname;
     private $passwort;
     private $status;
     private $uid;
@@ -11,10 +11,10 @@ class personal{
     private $utage;
     private $restutage;
 
-    public function __construct($pid,$vorname,$pid,$passwort,$status,$uid,$kid,$utage,$restutage){
+    public function __construct($pid,$vorname,$nachname,$passwort,$status,$uid,$kid,$utage,$restutage){
         $this->pid = $pid;
         $this->vorname = $vorname;
-        $this->pid = $pid;
+        $this->nachname = $nachname;
         $this->passwort = $passwort;
         $this->status = $status;
         $this->uid = $uid;
@@ -38,10 +38,10 @@ class personal{
     }
 
     public function getNachame(){
-        return $this->pid;
+        return $this->nachname;
     }
     public function setnachname($newName){
-        $this->pid = $newName;
+        $this->nachname = $newName;
     }
 
     public function getPasswort(){
@@ -215,28 +215,25 @@ function connServer(){
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $passwort);
 }
 
-
-function checkuser(){
+//link für richtige seiten hinzufügen für automatische weiterleitung
+function checkuser($abfrage){
     $conn = connServer();
 
-    $sql = "SELECT * FROM personal";
-    foreach ($conn->query($sql) as $i) {
-    echo "".$i["pid"].";"."".$i["passwort"].";"."".$i["status"]."";
-    echo "<br></br>";
-
-    if($i["pid"]== $pid && $i["passwort"]== $passwort && $i["status"]== 1){
-        echo "Ihr login für Personal war erfolgreich, Sie Können jetzt einen Urlaubsantrag stellen";
+    if($abfrage == "angestellter"){
+        echo "Ihr login als Angestellter war erfolgreich, Sie Können jetzt einen Urlaubsantrag stellen";
+        //link für richtige seite 
     }
     
-    if($i["pid"]== $pid && $i["passwort"]== $passwort && $i["status"]== 2){
+    if($abfrage == "personalleiter"){
         echo "Ihr login als Personalleiter war erfolgreich, Sie Können jetzt einen Urlaubsantrag stellen";
+        //link für richtige seite 
     }
 
-    if($i["pid"]== $pid && $i["passwort"]== $passwort && $i["status"]== 3){
+    if($abfrage == "admin"){
         echo "Ihr login als Admin war erfolgreich";
+        //link für richtige seite 
     }
     }
-}
 
 
 function showAllData($zahl){
@@ -244,30 +241,70 @@ function showAllData($zahl){
     
     if ($zahl == 1){
         $sql = "SELECT * FROM personal";
-        foreach ($conn->query($sql) as $i){
-            echo "".$i["pid"].";"."".$i["vorname"].";"."".$i["pid"].";"."".$i["passwort"].";"."".$i["status"].";"."".$i["urlaubstage"].";"."".$i["resturlaub"]."";
+        foreach ($conn->query($sql) as $abfrage){
+            echo "".$abfrage["pid"].";"."".$abfrage["vorname"].";"."".$abfrage["pid"].";"."".$abfrage["passwort"].";"."".$abfrage["status"].";"."".$abfrage["urlaubstage"].";"."".$abfrage["resturlaub"]."";
             echo "<br></br>";
         }
     }
 
     if ($zahl == 2){
         $sql = "SELECT * FROM krankheit";
-        foreach ($conn->query($sql) as $i){
-            echo "".$i["kid"].";"."".$i["pid"].";"."".$i["kanfang"].";"."".$i["kende"].";"."".$i["kgesamt"].";"."";
+        foreach ($conn->query($sql) as $abfrage){
+            echo "".$abfrage["kid"].";"."".$abfrage["pid"].";"."".$abfrage["kanfang"].";"."".$abfrage["kende"].";"."".$abfrage["kgesamt"].";"."";
             echo "<br></br>";
         }
     }
 
     if ($zahl == 3){
         $sql = "SELECT * FROM urlaubsantrag";
-        foreach ($conn->query($sql) as $i){
-            echo "".$i["uid"].";"."".$i["pid"].";"."".$i["uanfang"].";"."".$i["uende"].";"."".$i["ubeantragt"].";"."".$i["ugenommen"].";"."".$i["ugesamt"].";"."".$i["ustatus"]."";
+        foreach ($conn->query($sql) as $abfrage){
+            echo "".$abfrage["uid"].";"."".$abfrage["pid"].";"."".$abfrage["uanfang"].";"."".$abfrage["uende"].";"."".$abfrage["ubeantragt"].";"."".$abfrage["ugenommen"].";"."".$abfrage["ugesamt"].";"."".$abfrage["ustatus"]."";
             echo "<br></br>";
         }
     }
 }
+function session($pid,$passwort){
+// erste seite
+    $conn = connServer()
+    $sqlstatus = "SELECT personal.status FROM personal WHERE pid = $pid";
+    $sqlpasswort = "SELECT personal.passwort FROM personal WHERE pid = $pid";
+    checkuser($sqlstatus);
+    session_start();
+    $_SESSION["pid"] = $pid;
+    $_SESSION["passwort"] = $passwort;
+    if($password == $sqlpassword) { 
+        $_SESSION["loggedin"] = true;
+    }
+}
+
+
+// zweite seite
+session_start();
+?>
+<h1>Zweite Seite</h1>
+
+<?php
+ if ($_SESSION["loggedin"]) {
+
+     echo $_SESSION["name"];
+ }
 
 
 
-
+ function sessionLogin($pid,$passwort){
+    session_start();
+    $verhalten = 0;
+    if (!isset($_SESSION["pid"] && !isset($_GET["page"]))){
+    $verhalten = 0;
+    }
+    if($_GET["page"] == "log"){
+        $pid = $_POST["pid"];
+        $passwort = $_POST["passwort"];
+    
+    if（$pid = "pid" && $passwort == ("toll"){
+    $_SESSION ["pid"] = $pid;
+    $verhalten = 1;
+    else {$verhalten = 2;
+    }
+}
 ?>
