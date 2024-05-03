@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Benutzer anlegen</title>
+    <link rel="stylesheet" href="style.css"> 
+</head>
+<body>
+    <h1>Neuen Benutzer anlegen</h1>
+    <form id="registrationForm" action="register.php" method="post"> 
+        <div class="form-row">
+            <div>
+                <label for="vorname">Vorname:</label>
+                <input type="text" id="vorname" name="vorname" required>
+            </div>
+            <div>
+                <label for="nachname">Nachname:</label>
+                <input type="text" id="nachname" name="nachname" required>
+            </div>
+            <div>
+                <label for="status">Status:</label>
+                <select id="status" name="status" required>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+            </div>
+            <div>
+                <label for="passwort">Passwort:</label>
+                <input type="password" id="passwort" name="passwort" required>
+            </div>
+            <div>
+                <button type="submit">Benutzer anlegen</button>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
