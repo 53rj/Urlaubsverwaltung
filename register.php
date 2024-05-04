@@ -55,6 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     } catch (PDOException $e) {
         echo "Fehler bei der Registrierung: " . $e->getMessage();
     }
+    // eigentlich sollte das mit construct gebaut werden??
 }
 ?>
 </body>
