@@ -10,7 +10,7 @@ class personal{
     private int $utage;
     private int $restutage;
 
-    public function __construct($pdo, $vorname, $nachname, $passwort, $status, $utage, $restutage) {
+    public function __construct($pdo, $vorname, $nachname, $passwort, $status) {
         $this->pdo = $pdo;   // pdo added
         $this->vorname = $vorname;
         $this->nachname = $nachname;

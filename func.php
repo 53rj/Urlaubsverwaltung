@@ -27,8 +27,8 @@ function val_pw($passwort) {
 }
 
 function addUser($pdo, $vorname, $nachname, $status, $passwort) {
-    $hashedpasswort = password_hash($passwort, PASSWORD_DEFAULT);
+    $neues_personal = new personal($pdo, $vorname, $nachname, $passwort, $status);
     $statement = $pdo->prepare("INSERT INTO personal (vorname, nachname, status, passwort) VALUES (?, ?, ?, ?)");
-    $statement->execute([$vorname, $nachname, $status, $hashedpasswort]);
+    $statement->execute([$vorname, $nachname, $status, $passwort]);
     echo "Registrierung erfolgreich ausgeführt.";
 }

@@ -5,6 +5,7 @@ include "include/meta.html";
 include "include/header.html";
 include "func.php";
 include "include/register.html";
+include "function.php";
 ?>
 
 <!DOCTYPE html>
@@ -46,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     echo "<script>confirmRegistration();</script>";
                     exit;
                 } else {
-                    addUser($pdo, $vorname, $nachname, $status, $passwort);
+                    $neues_personal = new personal($pdo, $vorname, $nachname, $passwort, $status);
                 }
             }
         } else {
