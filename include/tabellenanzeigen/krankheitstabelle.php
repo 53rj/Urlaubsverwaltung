@@ -2,7 +2,7 @@
 
 <?php if (!empty($krankheiten)): ?>
 <table border='1'>
-    <tr><th>Beginn</th><th>Ende</th><th>Gesamt</th></tr>
+    <tr><th>kid</th><th>pid</th><th>Beginn</th><th>Ende</th><th>Gesamt</th></tr>
     <?php foreach ($krankheiten as $krankheit): ?>
         <tr>
             <td><?= htmlspecialchars($krankheit['kid']); ?></td>
