@@ -1,8 +1,8 @@
 <?php
 include "include/meta.html";
-include "include/header.html"; #
+include "include/header.html";
 include "function.php";
-include "php.php"
+include "f_function.php";
 ?>
 
 <body>

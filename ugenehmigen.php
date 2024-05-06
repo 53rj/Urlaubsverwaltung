@@ -2,7 +2,7 @@
 include "include/meta.html";
 include "include/header.html";
 include "function.php";
-include "func.php";
+include "f_function.php";
 ?>
 <h1>Nicht bearbeitete Urlaubsanträge:</h1>
 <div class="container">

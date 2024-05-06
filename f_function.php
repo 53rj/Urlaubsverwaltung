@@ -82,3 +82,15 @@ function antrag_anzeigen()
         echo "</tr>";
     }
 }
+
+function connServer()
+{
+    try {
+        $pdo = new PDO('mysql:host=localhost;dbname=urlaubsverwaltung', 'root', '');
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        return $pdo;
+    } catch (PDOException $e) {
+        error_log("Verbindung fehlgeschlagen: " . $e->getMessage());
+        return null;
+    }
+}

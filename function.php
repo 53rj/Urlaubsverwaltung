@@ -221,17 +221,7 @@ class personal
 //         }
 // }
 
-function connServer()
-{
-    try {
-        $pdo = new PDO('mysql:host=localhost;dbname=urlaubsverwaltung', 'root', '');
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        return $pdo;
-    } catch (PDOException $e) {
-        error_log("Verbindung fehlgeschlagen: " . $e->getMessage());
-        return null;
-    }
-}
+
 
 //link für richtige seiten hinzufügen für automatische weiterleitung
 function checkuser($abfrage)
@@ -291,10 +281,9 @@ function showAllData($pdo, $zahl)
 //             echo "<br></br>";
 //         }
 //     }
-
-
+// }
 // function session($pid,$passwort){
-// // erste seite
+// erste seite
 //     $conn = connServer()
 //     $sqlstatus = "SELECT personal.status FROM personal WHERE pid = $pid";
 //     $sqlpasswort = "SELECT personal.passwort FROM personal WHERE pid = $pid";
@@ -308,12 +297,17 @@ function showAllData($pdo, $zahl)
 // }
 
 
-// // zweite seite
-// session_start();
-//  if ($_SESSION["loggedin"]) {
+// zweite seite
+/*
+session_start();
+?>
+<h1>Zweite Seite</h1>
 
-//      echo $_SESSION["name"];
-//  }
+<?php
+if ($_SESSION["loggedin"]) {
+
+    echo $_SESSION["name"];
+}*/
 
 
 
