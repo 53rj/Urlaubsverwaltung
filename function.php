@@ -1,6 +1,7 @@
 <?php
 
-class personal{
+class personal
+{
     private $pdo;   // pdo added
     private int $pid;
     private string $vorname;
@@ -10,7 +11,8 @@ class personal{
     private int $utage;
     private int $restutage;
 
-    public function __construct($pdo, $vorname, $nachname, $passwort, $status) {
+    public function __construct($pdo, $vorname, $nachname, $passwort, $status)
+    {
         $this->pdo = $pdo;   // pdo added
         $this->vorname = $vorname;
         $this->nachname = $nachname;
@@ -20,68 +22,83 @@ class personal{
         $this->restutage = 30;
     }
 
-    public function getPid(){
+    public function getPid()
+    {
         return $this->pid;
     }
-    public function setPid($newPid){
+    public function setPid($newPid)
+    {
         $this->pid = $newPid;
     }
 
-    public function getVorname(){
+    public function getVorname()
+    {
         return $this->vorname;
     }
-    public function setVorname($newVorname){
+    public function setVorname($newVorname)
+    {
         $this->vorname = $newVorname;
     }
 
-    public function getNachame(){
+    public function getNachame()
+    {
         return $this->nachname;
     }
-    public function setnachname($newName){
+    public function setnachname($newName)
+    {
         $this->nachname = $newName;
     }
 
-    public function getPasswort(){
+    public function getPasswort()
+    {
         return $this->passwort;
     }
 
-    public function setPasswort($newPasswort) {
-        $this->passwort = password_hash($newPasswort, PASSWORD_DEFAULT); 
+    public function setPasswort($newPasswort)
+    {
+        $this->passwort = password_hash($newPasswort, PASSWORD_DEFAULT);
     }
 
-    public function getStatus(){
+    public function getStatus()
+    {
         return $this->status;
     }
-    public function setStatus($newStatus){
+    public function setStatus($newStatus)
+    {
         $this->status = $newStatus;
     }
 
 
-    public function getUtage(){
+    public function getUtage()
+    {
         return $this->utage;
     }
-    public function setUtage($newUtage){
+    public function setUtage($newUtage)
+    {
         $this->utage = $newUtage;
     }
 
-    public function getRestutage(){
+    public function getRestutage()
+    {
         return $this->restutage;
     }
-    public function setRestutage($newRestutage){
+    public function setRestutage($newRestutage)
+    {
         $this->restutage = $newRestutage;
     }
 
-    public function save() {
+    public function save()
+    {
         $stmt = $this->pdo->prepare("INSERT INTO personal (vorname, nachname, passwort, status, utage, restutage) VALUES (?, ?, ?, ?, ?, ?)");
         $stmt->execute([$this->vorname, $this->nachname, $this->passwort, $this->status, $this->utage, $this->restutage]);
     }
 
-    public static function exists($pdo, $vorname, $nachname) {
+    public static function exists($pdo, $vorname, $nachname)
+    {
         $stmt = $pdo->prepare("SELECT * FROM personal WHERE vorname = ? AND nachname = ?");
         $stmt->execute([$vorname, $nachname]);
         return $stmt->fetch() !== false;
     }
-
 }
 
 // class krank{
@@ -90,7 +107,7 @@ class personal{
 //     private $kanfang;
 //     private $kende;
 //     private $kgesamt;
-    
+
 //     public function __construct($kid,$pid,$kanfang,$kende,$kgesamt){
 //         $this->kid = $kid;
 //         $this->pid = $pid;
@@ -143,7 +160,7 @@ class personal{
 //     private $ubeantragt;
 //     private $ugesamt;
 //     private $ustatus;
-    
+
 //     public function __construct($uid,$pid,$uanfang,$uende,$ubeantragt,$ugesamt,$ustatus){
 //         $this->uid = $uid;
 //         $this->pid = $pid;
@@ -204,37 +221,40 @@ class personal{
 //         }
 // }
 
-function connServer() {
+function connServer()
+{
     try {
         $pdo = new PDO('mysql:host=localhost;dbname=urlaubsverwaltung', 'root', '');
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         return $pdo;
     } catch (PDOException $e) {
         error_log("Verbindung fehlgeschlagen: " . $e->getMessage());
-        return null; 
+        return null;
     }
 }
 
 //link für richtige seiten hinzufügen für automatische weiterleitung
-function checkuser($abfrage){
+function checkuser($abfrage)
+{
     $conn = connServer();
 
-    if($abfrage == "angestellter"){
+    if ($abfrage == "angestellter") {
         echo "Ihr login als Angestellter war erfolgreich, Sie Können jetzt einen Urlaubsantrag stellen";
         //link für richtige seite 
     }
-    
-    if($abfrage == "personalleiter"){
+
+    if ($abfrage == "personalleiter") {
         echo "Ihr login als Personalleiter war erfolgreich, Sie Können jetzt einen Urlaubsantrag stellen";
         //link für richtige seite 
     }
 
-    if($abfrage == "admin"){
+    if ($abfrage == "admin") {
         echo "Ihr login als Admin war erfolgreich";
         //link für richtige seite 
     }
 }
-function showAllData($pdo, $zahl) {
+function showAllData($pdo, $zahl)
+{
     try {
         $tableMap = [
             1 => "personal",
@@ -248,10 +268,10 @@ function showAllData($pdo, $zahl) {
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
-        return []; 
+        return [];
     } catch (PDOException $e) {
         error_log("Datenbankfehler: " . $e->getMessage());
-        return []; 
+        return [];
     }
 }
 
@@ -306,11 +326,11 @@ function showAllData($pdo, $zahl) {
 //     if($_GET["page"] == "log"){
 //         $pid = $_POST["pid"];
 //         $passwort = $_POST["passwort"];
-    
+
 //     if（$pid = "pid" && $passwort == ("toll"){
 //     $_SESSION ["pid"] = $pid;
 //     $verhalten = 1;
 //     else {$verhalten = 2;
 //     }
 // }
-// ?>
+// 

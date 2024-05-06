@@ -1,6 +1,8 @@
 <?php
 include "include/meta.html";
 include "include/header.html";
+include "function.php";
+include "func.php";
 ?>
 <h1>Nicht bearbeitete Urlaubsanträge:</h1>
 <div class="container">
@@ -15,17 +17,8 @@ include "include/header.html";
             </tr>
         </thead>
         <tbody id="pending-requests">
-            <!-- PHP: Hier wird die foreach-Schleife eingefügt um die Urlaubsanträge auszugeben -->
-            <!-- Beispielhafter statischer Eintrag zur Demonstration -->
             <tr>
-                <td>Max</td>
-                <td>Mustermann</td>
-                <td>2024-05-01</td>
-                <td>2024-05-15</td>
-                <td>
-                    <button type="button" class="btn-allow">Annehmen</button>
-                    <button type="button" class="btn-deny">Ablehnen</button>
-                </td>
+                <?php kommende_urlaube_anzeigen(); ?>
             </tr>
             <!-- PHP: Ende der foreach-Schleife -->
         </tbody>
