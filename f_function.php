@@ -110,3 +110,34 @@ function showAllData($pdo, $zahl){
         return [];
     }
 }
+
+
+//////////////// Muss noch geteste werden////////////////
+
+function login(){
+    
+    session_start();
+    $pid = $_POST["pid"];
+    $passwort = $_POST["passwort"];
+
+    $conn = connServer();
+    $_SESSOIN["status"] = "SELECT personal.status FROM personal WHERE pid = $pid AND passwort = $password";
+    
+    if ($_SESSOIN["status"] == "Angestellter") {
+        echo "Ihr login als Angestellter war erfolgreich, Sie Können jetzt einen Urlaubsantrag stellen";
+        $_SESSION['logged_in'] = true;
+        header("Location:  angestellterHeader.html");
+    }
+
+    if ($_SESSOIN["status"] == "Personalleiter") {
+        echo "Ihr login als Personalleiter war erfolgreich, Sie Können jetzt einen Urlaubsantrag stellen";
+        $_SESSION['logged_in'] = true;
+        header("Location:  personalleiterHeader.html");
+    }
+
+    if ($_SESSOIN["status"] == "Admin") {
+        echo "Ihr login als Admin war erfolgreich";
+        $_SESSION['logged_in'] = true;
+        header("Location:  adminHeader.html");
+    }
+}

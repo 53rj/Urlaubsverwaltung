@@ -1,4 +1,4 @@
-<?php
+<?html
 
 class personal
 {
@@ -274,17 +274,17 @@ function login(){
     
     if ($_SESSOIN["status"] == "Angestellter") {
         echo "Ihr login als Angestellter war erfolgreich, Sie Können jetzt einen Urlaubsantrag stellen";
-        //link für richtige seite 
+        header("Location:  angestellterHeader.html");
     }
 
     if ($_SESSOIN["status"] == "Personalleiter") {
         echo "Ihr login als Personalleiter war erfolgreich, Sie Können jetzt einen Urlaubsantrag stellen";
-        //link für richtige seite 
+        header("Location:  personalleiterHeader.html");
     }
 
     if ($_SESSOIN["status"] == "Admin") {
         echo "Ihr login als Admin war erfolgreich";
-        //link für richtige seite 
+        header("Location:  adminHeader.html");
     }
 }
 
@@ -314,7 +314,7 @@ session_start();
 ?>
 <h1>Zweite Seite</h1>
 
-<?php
+<?html
 if ($_SESSION["loggedin"]) {
 
     echo $_SESSION["name"];
