@@ -112,7 +112,7 @@ function showAllData($pdo, $zahl){
 }
 
 
-//////////////// Muss noch geteste werden////////////////
+////////////////  Muss noch getestet werden!!!  ////////////////
 
 function login(){
     
@@ -126,18 +126,18 @@ function login(){
     if ($_SESSOIN["status"] == "Angestellter") {
         echo "Ihr login als Angestellter war erfolgreich, Sie Können jetzt einen Urlaubsantrag stellen";
         $_SESSION['logged_in'] = true;
-        header("Location:  angestellterHeader.html");
+        header("Location:  angestellterheader.html");
     }
 
     if ($_SESSOIN["status"] == "Personalleiter") {
         echo "Ihr login als Personalleiter war erfolgreich, Sie Können jetzt einen Urlaubsantrag stellen";
         $_SESSION['logged_in'] = true;
-        header("Location:  personalleiterHeader.html");
+        header("Location:  personalleiterheader.html");
     }
 
     if ($_SESSOIN["status"] == "Admin") {
         echo "Ihr login als Admin war erfolgreich";
         $_SESSION['logged_in'] = true;
-        header("Location:  adminHeader.html");
+        header("Location:  adminheader.html");
     }
 }
