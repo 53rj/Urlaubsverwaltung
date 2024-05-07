@@ -18,7 +18,7 @@ include "include/register.html";
 
 <body>
     <?php
-    if ($_SERVER['REQUEST_METHOD'] == "POST") {
+    if ($_SERVER['REQUEST_METHOD'] == "POST" && $_SESSION["status"] == "Admin") {
         try {
             $pdo = new PDO('mysql:host=localhost;dbname=urlaubsverwaltung', 'root', '');
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

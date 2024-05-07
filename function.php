@@ -224,25 +224,6 @@ class personal
 
 
 //link für richtige seiten hinzufügen für automatische weiterleitung
-function checkuser($abfrage)
-{
-    $conn = connServer();
-
-    if ($abfrage == "angestellter") {
-        echo "Ihr login als Angestellter war erfolgreich, Sie Können jetzt einen Urlaubsantrag stellen";
-        //link für richtige seite 
-    }
-
-    if ($abfrage == "abteilungsleiter") {
-        echo "Ihr login als Personalleiter war erfolgreich, Sie Können jetzt einen Urlaubsantrag stellen";
-        //link für richtige seite 
-    }
-
-    if ($abfrage == "admin") {
-        echo "Ihr login als Admin war erfolgreich";
-        //link für richtige seite 
-    }
-}
 // function showAllData($pdo, $zahl)
 // {
 //     try {
@@ -282,21 +263,51 @@ function checkuser($abfrage)
 //         }
 //     }
 //}
-function session($pid,$passwort){
-erste seite
-    $conn = connServer()
-    $sqlstatus = "SELECT personal.status FROM personal WHERE pid = $pid";
-    $sqlpasswort = "SELECT personal.passwort FROM personal WHERE pid = $pid";
-    checkuser($sqlstatus);
+function login(){
+    
     session_start();
-    $_SESSION["pid"] = $pid;
-    $_SESSION["passwort"] = $passwort;
-    if($password == $sqlpassword) { 
-        $_SESSION["loggedin"] = true;
+    $pid = $_POST["pid"];
+    $passwort = $_POST["passwort"];
+
+    $conn = connServer();
+    $_SESSOIN["status"] = "SELECT personal.status FROM personal WHERE pid = $pid AND passwort = $password";
+    
+    if ($_SESSOIN["status"] == "Angestellter") {
+        echo "Ihr login als Angestellter war erfolgreich, Sie Können jetzt einen Urlaubsantrag stellen";
+        //link für richtige seite 
+    }
+
+    if ($_SESSOIN["status"] == "Personalleiter") {
+        echo "Ihr login als Personalleiter war erfolgreich, Sie Können jetzt einen Urlaubsantrag stellen";
+        //link für richtige seite 
+    }
+
+    if ($_SESSOIN["status"] == "Admin") {
+        echo "Ihr login als Admin war erfolgreich";
+        //link für richtige seite 
     }
 }
 
 
+// function checkuser()
+// {
+//     $conn = connServer();
+
+//     if ($_SESSOIN["status"] == "Angestellter") {
+//         echo "Ihr login als Angestellter war erfolgreich, Sie Können jetzt einen Urlaubsantrag stellen";
+//         //link für richtige seite 
+//     }
+
+//     if ($_SESSOIN["status"] == "Personalleiter") {
+//         echo "Ihr login als Personalleiter war erfolgreich, Sie Können jetzt einen Urlaubsantrag stellen";
+//         //link für richtige seite 
+//     }
+
+//     if ($_SESSOIN["status"] == "Admin") {
+//         echo "Ihr login als Admin war erfolgreich";
+//         //link für richtige seite 
+//     }
+// }
 // zweite seite
 /*
 session_start();

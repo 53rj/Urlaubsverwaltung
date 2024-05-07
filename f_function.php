@@ -1,7 +1,6 @@
 <?php
 
-function val_pw($passwort)
-{
+function val_pw($passwort){
     $min_len = 8;
 
     if (strlen($passwort) < $min_len) {
@@ -27,16 +26,14 @@ function val_pw($passwort)
     return "Das Passwort ist gültig";
 }
 
-function addUser($pdo, $vorname, $nachname, $status, $passwort)
-{
+function addUser($pdo, $vorname, $nachname, $status, $passwort){
     $neues_personal = new personal($pdo, $vorname, $nachname, $passwort, $status);
     $statement = $pdo->prepare("INSERT INTO personal (vorname, nachname, status, passwort) VALUES (?, ?, ?, ?)");
     $statement->execute([$vorname, $nachname, $status, $passwort]);
     echo "Registrierung erfolgreich ausgeführt.";
 }
 
-function kommende_urlaube_anzeigen()
-{
+function kommende_urlaube_anzeigen(){
     $conn = connServer();
     $sql = "SELECT p.vorname, p.nachname, u.uanfang, u.uende 
     FROM personal p, urlaubsantrag u 
@@ -59,8 +56,7 @@ function kommende_urlaube_anzeigen()
     }
 }
 
-function antrag_anzeigen()
-{
+function antrag_anzeigen(){
     $conn = connServer();
     $sql = "SELECT p.vorname, p.nachname, u.uanfang, u.uende 
             FROM personal p, urlaubsantrag u 
@@ -83,8 +79,7 @@ function antrag_anzeigen()
     }
 }
 
-function connServer()
-{
+function connServer(){
     try {
         $pdo = new PDO('mysql:host=localhost;dbname=urlaubsverwaltung', 'root', '');
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -95,8 +90,7 @@ function connServer()
     }
 }
 
-function showAllData($pdo, $zahl)
-{
+function showAllData($pdo, $zahl){
     try {
         $tableMap = [
             1 => "personal",
