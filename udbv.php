@@ -2,12 +2,12 @@
 include "include/meta.html";
 include "include/header.html";
 include "function.php";
-include "func.php";
+include "f_function.php";
 
 $pdo = new PDO('mysql:host=localhost;dbname=urlaubsverwaltung', 'root', '');
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-$tableChoice = $_GET['table'] ?? 1;  
+$tableChoice = $_GET['table'] ?? 1;
 $users = showAllData($pdo, $tableChoice);
 $antraege = showAllData($pdo, $tableChoice);
 $krankheiten = showAllData($pdo, $tableChoice);
@@ -22,4 +22,3 @@ if ($tableChoice == 1) {
 
 
 include "include/footer.html";
-?>
