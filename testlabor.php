@@ -89,7 +89,7 @@ function rueckerstattung($pid, $krankheitsanfang, $krankheitsende) {
     JOIN urlaubsantrag u ON k.pid = u.pid
     WHERE k.kanfang <= u.uende
     AND k.kende >= u.uanfang
-    AND k.pid = $pid
+    AND k.pid = $pid)
     WHERE pid = $pid;
     -- Lösche die temporäre Tabelle nach Gebrauch
     DROP TEMPORARY TABLE IF EXISTS TempUrlaub;");
