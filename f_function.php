@@ -155,3 +155,55 @@ else {
     header("Location: include/login.html");
 }
 }
+
+
+///////////////// Zu tesdende Funktionen //////////////////
+
+function nichtVerplanteUrlaubstage(){
+    $conn = connServer();
+    $sql = "SELECT p.resturlaub
+            FROM personal p 
+            WHERE p.pid = $_SESSION['pid']"; # Hier muss noch die Session id rein zur identifiuierung des Users
+    $resturlaub = $conn->query($sql);
+    echo "$resturlaub";
+}
+
+function genehmigtU(){
+    $conn = connServer();
+    $sql = "SELECT u.uanfang, u.uende, u.gesamt
+            FROM personal p, urlaubsantrag u 
+            WHERE p.pid = $_SESSION['pid'] # Hier muss noch die Session id rein zur identifiuierung des Users
+            AND u.pid = p.pid 
+            AND u.ustatus = 'genehmigt' 
+            AND u.uende > CURRENT_DATE();";
+    $urlaube = $conn->query($sql);
+    $anzeige = array();
+    while ($row = $urlaube->fetch(PDO::FETCH_ASSOC)) {
+        $anzeige = $row;
+        echo "<tr>";
+        foreach ($anzeige as $kommende_urlaube) {
+            echo  "<td>" . $kommende_urlaube . "</td>";
+        }
+        echo "</tr>";
+    }
+}
+
+function nichtGenehmigtU(){
+    $conn = connServer();
+    $sql = "SELECT u.uanfang, u.uende, u.gesamt
+            FROM personal p, urlaubsantrag u 
+            WHERE p.pid = $_SESSION['pid'] # Hier muss noch die Session id rein zur identifiuierung des Users
+            AND u.pid = p.pid 
+            AND u.ustatus = 'abgelehnt' 
+            AND u.uende > CURRENT_DATE();";
+    $urlaube = $conn->query($sql);
+    $anzeige = array();
+    while ($row = $urlaube->fetch(PDO::FETCH_ASSOC)) {
+        $anzeige = $row;
+        echo "<tr>";
+        foreach ($anzeige as $kommende_urlaube) {
+            echo  "<td>" . $kommende_urlaube . "</td>";
+        }
+        echo "</tr>";
+    }
+}
