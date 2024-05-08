@@ -1,7 +1,4 @@
 <?php
-session_start();
-include "f_function.php";
-checkStatus();
 
 if ($_SESSION['status'] !== 'Admin') {
     echo "Zugriff verweigert!";
