@@ -1,6 +1,6 @@
 <?php
 
-function val_pw($passwort){
+/*function val_pw($passwort){
     $min_len = 8;
 
     if (strlen($passwort) < $min_len) {
@@ -76,7 +76,7 @@ function antrag_anzeigen(){
             </td>';
         echo "</tr>";
     }
-}
+}*/
 
 function connServer(){
     try {
@@ -88,7 +88,7 @@ function connServer(){
         return null;
     }
 }
-
+/*
 function showAllData($pdo, $zahl){
     try {
         $tableMap = [
@@ -154,7 +154,7 @@ else {
     echo "Sie sind nicht eingeloggt!";
     header("Location: include/login.html");
 }
-}
+}*/
 
 
 ///////////////// Zu tesdende Funktionen //////////////////
@@ -163,22 +163,24 @@ function nichtVerplanteUrlaubstage(){
     $conn = connServer();
     $sql = "SELECT p.resturlaub
             FROM personal p 
-            WHERE p.pid = $_SESSION['pid']"; # Hier muss noch die Session id rein zur identifiuierung des Users
-    $resturlaub = $conn->query($sql);
-    echo "$resturlaub";
+            WHERE p.pid = 7"; # Hier muss noch die Session id rein zur identifiuierung des Users
+    $stmt = $conn->query($sql);
+    $result = $stmt->fetch(PDO::FETCH_ASSOC); // Fetch als assoziatives Array
+    $resturlaub = $result['resturlaub']; // Zugriff auf das spezifische Feld
+    echo "<p>" . $resturlaub . "</p>";
 }
 
-function genehmigtU(){
+function freigabenUrlaub($wert){
+    
     $conn = connServer();
-    $sql = "SELECT u.uanfang, u.uende, u.gesamt
+    $sql = "SELECT u.uanfang, u.uende, u.ubeantragt
             FROM personal p, urlaubsantrag u 
-            WHERE p.pid = $_SESSION['pid'] # Hier muss noch die Session id rein zur identifiuierung des Users
-            AND u.pid = p.pid 
-            AND u.ustatus = 'genehmigt' 
-            AND u.uende > CURRENT_DATE();";
-    $urlaube = $conn->query($sql);
+            WHERE p.pid = 7 # Hier muss noch die Session id rein zur identifiuierung des Users
+            AND u.pid = p.pid
+            AND u.ustatus = '$wert'";
+    $genehmigteUrlaube = $conn->query($sql);
     $anzeige = array();
-    while ($row = $urlaube->fetch(PDO::FETCH_ASSOC)) {
+    while ($row = $genehmigteUrlaube->fetch(PDO::FETCH_ASSOC)) {
         $anzeige = $row;
         echo "<tr>";
         foreach ($anzeige as $kommende_urlaube) {
@@ -188,22 +190,3 @@ function genehmigtU(){
     }
 }
 
-function nichtGenehmigtU(){
-    $conn = connServer();
-    $sql = "SELECT u.uanfang, u.uende, u.gesamt
-            FROM personal p, urlaubsantrag u 
-            WHERE p.pid = $_SESSION['pid'] # Hier muss noch die Session id rein zur identifiuierung des Users
-            AND u.pid = p.pid 
-            AND u.ustatus = 'abgelehnt' 
-            AND u.uende > CURRENT_DATE();";
-    $urlaube = $conn->query($sql);
-    $anzeige = array();
-    while ($row = $urlaube->fetch(PDO::FETCH_ASSOC)) {
-        $anzeige = $row;
-        echo "<tr>";
-        foreach ($anzeige as $kommende_urlaube) {
-            echo  "<td>" . $kommende_urlaube . "</td>";
-        }
-        echo "</tr>";
-    }
-}
