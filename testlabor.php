@@ -79,7 +79,7 @@ function rueckerstattung($pid, $krankheitsanfang, $krankheitsende) {
              + (CASE WHEN WEEKDAY($krankheitsende) = 5 THEN 1 ELSE 0 END)));
     -- Daten von der temporären Tabelle in die Haupttabelle übertragen
     INSERT INTO krankheit (pid, kanfang, kende, kgesamt)
-    SELECT $pid, kanfang, kende, kgesamt, 30
+    SELECT $pid, kanfang, kende, kgesamt
     FROM TempKrankheit;
     -- Erstattet die Krankheitstage dem Resturlaub wieder gut
     UPDATE personal 
