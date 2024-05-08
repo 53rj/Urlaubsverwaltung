@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 08. Mai 2024 um 09:10
+-- Erstellungszeit: 08. Mai 2024 um 09:18
 -- Server-Version: 10.4.32-MariaDB
 -- PHP-Version: 8.2.12
 
@@ -109,14 +109,14 @@ INSERT INTO `urlaubsantrag` (`uid`, `pid`, `uanfang`, `uende`, `ubeantragt`, `ug
 --
 ALTER TABLE `krankheit`
   ADD PRIMARY KEY (`kid`),
-  ADD UNIQUE KEY `pid` (`pid`);
+  ADD KEY `pid` (`pid`) USING BTREE;
 
 --
 -- Indizes für die Tabelle `personal`
 --
 ALTER TABLE `personal`
   ADD PRIMARY KEY (`pid`),
-  ADD UNIQUE KEY `passwort` (`passwort`);
+  ADD KEY `passwort` (`passwort`) USING BTREE;
 
 --
 -- Indizes für die Tabelle `urlaubsantrag`
@@ -133,7 +133,7 @@ ALTER TABLE `urlaubsantrag`
 -- AUTO_INCREMENT für Tabelle `krankheit`
 --
 ALTER TABLE `krankheit`
-  MODIFY `kid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `kid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT für Tabelle `personal`
