@@ -1,8 +1,8 @@
 <?php
 include "include/meta.html";
-include "include/header.html";
 include "function.php";
 include "f_function.php";
+checkStatus();
 
 $pdo = new PDO('mysql:host=localhost;dbname=urlaubsverwaltung', 'root', '');
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

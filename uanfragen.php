@@ -1,6 +1,6 @@
 <?php
 include "include/meta.html";
-include "include/header.html";
+checkStatus();
 ?>
 <!-- abfrage ob der user klasse 2 hat -->
 <!-- foreach funktion für neue urlaubsanträge mit 2 buttons annehmen / ablehnen-->

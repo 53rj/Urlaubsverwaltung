@@ -110,3 +110,49 @@ function showAllData($pdo, $zahl){
         return [];
     }
 }
+
+function login(){
+    
+    session_start();
+    $pid = $_POST["pid"];
+    $passwort = $_POST["passwort"];
+
+    $conn = connServer();
+    $_SESSION["status"] = "SELECT personal.status FROM personal WHERE pid = $pid AND passwort = $passwort";
+    
+    if ($_SESSION["status"] == "Angestellter") {
+        echo "Ihr login als Angestellter war erfolgreich, Sie Können jetzt einen Urlaubsantrag stellen";
+        $_SESSION['logged_in'] = true;
+        include "include/angestellterheader.html";
+    }
+
+    if ($_SESSION["status"] == "Personalleiter") {
+        echo "Ihr login als Personalleiter war erfolgreich, Sie Können jetzt einen Urlaubsantrag stellen";
+        $_SESSION['logged_in'] = true;
+        include "include/personalleiterheader.html";
+    }
+
+    if ($_SESSION["status"] == "Admin") {
+        echo "Ihr login als Admin war erfolgreich";
+        $_SESSION['logged_in'] = true;
+        include "include/adminheader.html";
+    }
+}
+
+function checkStatus(){
+if (isset($_SESSION['status']) && $_SESSION['status'] == "Angestellter") {
+    include "include/angestellterheader.html";
+}
+
+if (isset($_SESSION['status']) && $_SESSION['status'] == "Personalleiter") {
+    include "include/personalleiterheader.html";
+}
+
+if (isset($_SESSION['status']) && $_SESSION['status'] == "Admin") {
+    include "include/adminheader.html";
+}
+else {
+    echo "Sie sind nicht eingeloggt!";
+    header("Location: include/login.html");
+}
+}
