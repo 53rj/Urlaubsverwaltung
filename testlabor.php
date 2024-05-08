@@ -95,3 +95,18 @@ function rueckerstattung($pid, $krankheitsanfang, $krankheitsende) {
     DROP TEMPORARY TABLE IF EXISTS TempUrlaub;");
     $stmt->execute();
 }
+
+
+function UserBearbeiten($pid, $vorname, $nachname, $passwort, $status, $resturlaub) {
+    connServer();
+    $stmt = $link->prepare("UPDATE personal 
+    SET vorname = $vorname, nachname = $nachname, passwort = $passwort, personal.status = $status, urlaubstage = 30, resturlaub = $resturlaub
+    WHERE pid = $pid");
+    $stmt->execute();
+}
+
+function DeleteBearbeiten($pid) {
+    connServer();
+    $stmt = $link->prepare("DELETE FROM personal WHERE pid = $pid");
+    $stmt->execute();
+}
