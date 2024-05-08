@@ -7,23 +7,17 @@ $pdo = connServer();
 if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
     echo "Sie sind bereits eingeloggt!";
     header("Location: index.php");
-    header("Location: index.php");
     exit;
 }
 
 include "login.html";
-include "login.html";
 
-if (!empty($_POST)) {
-    if (empty($_POST["pid"]) || empty($_POST["passwort"])) {  
+if (!empty($_POST)) 
     if (empty($_POST["pid"]) || empty($_POST["passwort"])) {  
         echo "Beide Felder müssen ausgefüllt werden!";
     } else {
         $pid = $_POST["pid"];
         $passwort = $_POST["passwort"];  
-        $pid = $_POST["pid"];
-        $passwort = $_POST["passwort"];  
-
         $DBquery = $pdo->prepare("SELECT pid, passwort, status FROM personal WHERE pid = ?");
         $DBquery->execute([$pid]);
         $personal_data = $DBquery->fetch(PDO::FETCH_ASSOC);
@@ -39,6 +33,5 @@ if (!empty($_POST)) {
 }
 
     }
-}
 ?>
-?>
+
