@@ -138,20 +138,18 @@ function login(){
     }
 }
 
-function checkStatus(){
-if (isset($_SESSION['status']) && $_SESSION['status'] == "Angestellter") {
-    include "include/angestellterheader.html";
-}
-
-if (isset($_SESSION['status']) && $_SESSION['status'] == "Personalleiter") {
-    include "include/personalleiterheader.html";
-}
-
-if (isset($_SESSION['status']) && $_SESSION['status'] == "Admin") {
-    include "include/adminheader.html";
-}
-else {
-    echo "Sie sind nicht eingeloggt!";
-    header("Location: include/login.html");
+function checkStatus() {
+    if (isset($_SESSION['status'])) {  
+        if ($_SESSION['status'] == "Angestellter") {
+            include "include/angestellterheader.html";
+        } elseif ($_SESSION['status'] == "Personalleiter") {
+            include "include/personalleiterheader.html";
+        } elseif ($_SESSION['status'] == "Admin") {
+            include "include/adminheader.html";
+        }
+    } else {
+        echo "Sie sind nicht eingeloggt!";
+        header("Location: include/login.html");
+        exit;
 }
 }
