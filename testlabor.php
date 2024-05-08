@@ -68,3 +68,30 @@ function urlaubsantrag($pid, $urlaubsanfang, $urlaubsende)
     DROP TEMPORARY TABLE IF EXISTS TempUrlaub;");
     $stmt->execute();
 }
+
+function rueckerstattung($pid, $krankheitsanfang, $krankheitsende) {
+    $stmt = $link->prepare("CREATE TEMPORARY TABLE IF NOT EXISTS TempUrlaub (kanfang DATE, kende DATE, kgesamt INT);
+    -- Berechnung und Einfügen der Urlaubstage unter Ausschluss der Wochenenden    
+    INSERT INTO TempKrankheit ($krankheitsanfang, $krankheitsende, 
+            (DATEDIFF($krankheitsende, $krankheitsanfang) + 1
+             - ((DATEDIFF($krankheitsende, $krankheitsanfang) + 1) / 7 * 2)
+             + (CASE WHEN WEEKDAY($krankheitsanfang) = 6 THEN 1 ELSE 0 END)
+             + (CASE WHEN WEEKDAY($krankheitsende) = 5 THEN 1 ELSE 0 END)));
+    -- Daten von der temporären Tabelle in die Haupttabelle übertragen
+    INSERT INTO krankheit (pid, kanfang, kende, kgesamt)
+    SELECT $pid, kanfang, kende, kgesamt, 30
+    FROM TempKrankheit;
+    -- Erstattet die Krankheitstage dem Resturlaub wieder gut
+    UPDATE personal 
+    SET resturlaub = resturlaub + (
+    SELECT SUM(DATEDIFF(LEAST(k.kende, u.uende), GREATEST(k.kanfang, u.uanfang)) + 1)
+    FROM krankheit k
+    JOIN urlaubsantrag u ON k.pid = u.pid
+    WHERE k.kanfang <= u.uende
+    AND k.kende >= u.uanfang
+    AND k.pid = $pid
+    WHERE pid = $pid;
+    -- Lösche die temporäre Tabelle nach Gebrauch
+    DROP TEMPORARY TABLE IF EXISTS TempUrlaub;");
+    $stmt->execute();
+}
