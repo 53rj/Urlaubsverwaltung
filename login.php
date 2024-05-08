@@ -29,7 +29,7 @@ if (!empty($_POST)) {
 
         if ($personal_data) {
             $_SESSION['logged_in'] = true;
-            $_SESSION['personal_id'] = $user_data['pid']; // Speicherung der Nutzer ID (uid) in der Session
+            $_SESSION['personal_id'] = $user_data['pid']; // Speicherung der Nutzer ID (pid) in der Session
             header("Location: index.php"); // Umleitung, falls benötigt
             exit;
         } else {
@@ -38,5 +38,3 @@ if (!empty($_POST)) {
     }
 }
 
-include "incl/footer.html";
-?>

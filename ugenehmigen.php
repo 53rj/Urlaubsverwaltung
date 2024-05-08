@@ -1,8 +1,8 @@
 <?php
 include "include/meta.html";
-include "include/header.html";
 include "function.php";
 include "f_function.php";
+checkStatus();
 ?>
 <h1>Nicht bearbeitete Urlaubsanträge:</h1>
 <div class="container">

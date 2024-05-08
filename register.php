@@ -1,9 +1,9 @@
 <?php
-session_start();
+// session_start();
 
 include "include/meta.html";
-include "include/header.html";
 include "f_function.php";
+checkStatus();
 include "include/register.html";
 ?>
 
