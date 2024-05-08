@@ -1,3 +1,17 @@
+<?php
+session_start();
+include "f_function.php";
+checkStatus();
+
+if ($_SESSION['status'] !== 'Admin') {
+    echo "Zugriff verweigert!";
+    exit;
+}
+$conn = connServer();
+if (!$conn) {
+    die("Datenbankverbindung konnte nicht hergestellt werden.");
+}
+?>
 <h1>Urlaubstabelle</h1>
 
 <?php if (!empty($antraege)) : ?>

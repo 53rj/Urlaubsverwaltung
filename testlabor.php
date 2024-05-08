@@ -68,3 +68,24 @@ function urlaubsantrag($pid, $urlaubsanfang, $urlaubsende)
     DROP TEMPORARY TABLE IF EXISTS TempUrlaub;");
     $stmt->execute();
 }
+
+// dein aktueller Code versucht mehrere SQL-Anweisungen in einem einzigen Aufruf von prepare auszuführen. 
+// das wird von PDO, wenn es um MySQL geht, nicht unterstützt. 
+// du musst jede Anweisung separat vorbereiten und ausführen
+
+// ChadGPT - Lösung:
+// $conn = connServer();
+// $conn->exec("CREATE TEMPORARY TABLE IF NOT EXISTS TempUrlaub (uanfang DATE, uende DATE, tage INT);");
+
+// $sql = "INSERT INTO TempUrlaub (uanfang, uende, tage)
+//         VALUES (?, ?, DATEDIFF(?, ?) + 1 - (DATEDIFF(?, ?) + 1) / 7 * 2 + (CASE WHEN WEEKDAY(?) = 6 THEN 1 ELSE 0 END) + (CASE WHEN WEEKDAY(?) = 5 THEN 1 ELSE 0 END))";
+// $stmt = $conn->prepare($sql);
+// $stmt->execute([$urlaubsanfang, $urlaubsende, $urlaubsende, $urlaubsanfang, $urlaubsende, $urlaubsanfang, $urlaubsanfang, $urlaubsende]);
+
+// $sql = "INSERT INTO urlaubsantrag (pid, uanfang, uende, ubeantragt, ugesamt, ustatus)
+//         SELECT ?, uanfang, uende, tage, 30, 'beantragt'
+//         FROM TempUrlaub";
+// $stmt = $conn->prepare($sql);
+// $stmt->execute([$pid]);
+
+// $conn->exec("DROP TEMPORARY TABLE IF EXISTS TempUrlaub;");

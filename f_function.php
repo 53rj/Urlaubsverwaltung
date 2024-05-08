@@ -120,38 +120,51 @@ function login(){
     $_SESSION["status"] = "SELECT personal.status FROM personal WHERE pid = $pid AND passwort = $passwort";
     
     if ($_SESSION["status"] == "Angestellter") {
-        echo "Ihr login als Angestellter war erfolgreich, Sie Können jetzt einen Urlaubsantrag stellen";
+        // echo "Ihr login als Angestellter war erfolgreich, Sie Können jetzt einen Urlaubsantrag stellen";
+        // sieht man eh nicht, weil man automatisch auf der Seite ist
         $_SESSION['logged_in'] = true;
         include "include/angestellterheader.html";
     }
 
-    if ($_SESSION["status"] == "Personalleiter") {
-        echo "Ihr login als Personalleiter war erfolgreich, Sie Können jetzt einen Urlaubsantrag stellen";
+    if ($_SESSION["status"] == "Abteilungsleiter") {
+        // echo "Ihr login als Abteilungsleiter war erfolgreich, Sie Können jetzt einen Urlaubsantrag stellen";
+        // sieht man eh nicht, weil man automatisch auf der Seite ist
         $_SESSION['logged_in'] = true;
-        include "include/personalleiterheader.html";
+        include "include/Abteilungsleiterheader.html";
     }
 
     if ($_SESSION["status"] == "Admin") {
-        echo "Ihr login als Admin war erfolgreich";
+        // echo "Ihr login als Admin war erfolgreich";
+        // sieht man eh nicht, weil man automatisch auf der Seite ist
         $_SESSION['logged_in'] = true;
         include "include/adminheader.html";
     }
 }
 
-function checkStatus(){
-if (isset($_SESSION['status']) && $_SESSION['status'] == "Angestellter") {
-    include "include/angestellterheader.html";
+function checkStatus() {
+    if (isset($_SESSION['status'])) {
+        switch ($_SESSION['status']) {
+            case "Angestellter":
+                include "include/angestellterheader.html";
+                break;
+            case "Abteilungsleiter":
+                include "include/abteilungsleiterheader.html";
+                break;
+            case "Admin":
+                include "include/adminheader.html";
+                break;
+        }
+    } else {
+        if (!isset($_SESSION['attempted_redirect'])) {
+            $_SESSION['attempted_redirect'] = true;
+            header("Location: login.php");
+            exit;
+        } else {
+            session_unset(); 
+            session_destroy(); 
+            header("Location: login.php");
+            exit;
+        }
+    }
 }
 
-if (isset($_SESSION['status']) && $_SESSION['status'] == "Personalleiter") {
-    include "include/personalleiterheader.html";
-}
-
-if (isset($_SESSION['status']) && $_SESSION['status'] == "Admin") {
-    include "include/adminheader.html";
-}
-else {
-    echo "Sie sind nicht eingeloggt!";
-    header("Location: include/login.html");
-}
-}

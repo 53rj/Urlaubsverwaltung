@@ -1,8 +1,25 @@
+<?php
+
+if ($_SESSION['status'] !== 'Admin') {
+    echo "Zugriff verweigert!";
+    exit;
+}
+$conn = connServer();
+if (!$conn) {
+    die("Datenbankverbindung konnte nicht hergestellt werden.");
+}
+?>
 <h1>Registrierte Krankheiten:</h1>
 
 <?php if (!empty($krankheiten)): ?>
 <table border='1'>
-    <tr><th>kid</th><th>pid</th><th>Beginn</th><th>Ende</th><th>Gesamt</th></tr>
+    <tr>
+        <th>kid</th
+        ><th>pid</th>
+        <th>Beginn</th>
+        <th>Ende</th>
+        <th>Gesamt</th>
+    </tr>
     <?php foreach ($krankheiten as $krankheit): ?>
         <tr>
             <td><?= htmlspecialchars($krankheit['kid']); ?></td>

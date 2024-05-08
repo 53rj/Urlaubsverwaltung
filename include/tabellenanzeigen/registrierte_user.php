@@ -1,8 +1,29 @@
+<?php
+session_start();
+include "f_function.php";
+checkStatus();
+
+if ($_SESSION['status'] !== 'Admin') {
+    echo "Zugriff verweigert!";
+    exit;
+}
+$conn = connServer();
+if (!$conn) {
+    die("Datenbankverbindung konnte nicht hergestellt werden.");
+}
+?>
 <h1>Registrierte Benutzer:</h1>
 
 <?php if (!empty($users)): ?>
 <table border='1'>
-    <tr><th>PID</th><th>Vorname</th><th>Nachname</th><th>Status</th><th>Resturlaub</th><th>Urlaubstage</th></tr>
+    <tr>
+        <th>PID</th>
+        <th>Vorname</th>
+        <th>Nachname</th>
+        <th>Status</th>
+        <th>Resturlaub</th
+        ><th>Urlaubstage</th>
+    </tr>
     <?php foreach ($users as $user): ?>
         <tr>
             <td><?= htmlspecialchars($user['pid']); ?></td>

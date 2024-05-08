@@ -1,5 +1,7 @@
 <?php
+session_start();
 include "include/meta.html";
+include "f_function.php";
 checkStatus();
 ?>
 <!-- abfrage ob der user klasse 2 hat -->

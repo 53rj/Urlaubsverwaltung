@@ -1,6 +1,6 @@
 <?php
+session_start();
 include "include/meta.html";
-include "function.php";
 include "f_function.php";
 checkStatus();
 ?>

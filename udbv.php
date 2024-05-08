@@ -1,9 +1,12 @@
 <?php
+session_start();
 include "include/meta.html";
-include "function.php";
 include "f_function.php";
 checkStatus();
-
+if ($_SESSION['status'] !== 'Admin') {
+    echo "Zugriff verweigert!";
+    exit;
+}
 $pdo = new PDO('mysql:host=localhost;dbname=urlaubsverwaltung', 'root', '');
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
