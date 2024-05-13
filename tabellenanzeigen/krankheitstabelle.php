@@ -25,7 +25,7 @@ $conn = connServer();
                 <td><?= htmlspecialchars($krankheit['kende']); ?></td>
                 <td><?= htmlspecialchars($krankheit['kgesamt']); ?></td>
                 <td>
-                    <form action="./include/tabellenanzeigen/edit_krankheit.php" method="post" style="display: inline;">
+                    <form action="./tabellenanzeigen/edit_krankheit.php" method="post" style="display: inline;">
                         <input type="hidden" name="kid" value="<?= $krankheit['kid']; ?>">
                         <input type="submit" value="Bearbeiten">
                     </form>

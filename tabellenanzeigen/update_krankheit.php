@@ -5,8 +5,21 @@ if ($_SESSION['status'] !== 'Admin') {
     exit;
 }
 
-include('../../meta.html');
-include('../../f_function.php');
+include $_SERVER['DOCUMENT_ROOT'] . '/php/Urlaubsverwaltung/f_function.php';
+?>
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Urlaubsverwaltung der IT-Solution & Design GmbH">
+    <meta name="author" content="Sergiy Stümpel, Marco Wedemeyer, Civan Adam" />
+    <link rel="stylesheet" href="/php/Urlaubsverwaltung/style.css">
+    <title>Datenbankeinträge bearbeiten</title>
+</head>
+<?php 
+
 
 checkStatus();
 
@@ -48,7 +61,6 @@ try {
 } catch (Exception $e) {
     die("Allgemeiner Fehler: " . $e->getMessage());
 }
-?>
-<?php
-include "../../footer.html";
+
+include $_SERVER['DOCUMENT_ROOT'] . "/php/Urlaubsverwaltung/include/footer.html";
 ?>

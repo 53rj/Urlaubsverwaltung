@@ -2,7 +2,7 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-include "include/meta.html";
+include "include/meta.php";
 include "f_function.php";
 $pdo = connServer();
 

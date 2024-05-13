@@ -5,8 +5,20 @@ if ($_SESSION['status'] !== 'Admin') {
     exit;
 }
 
-include('../meta.html');
-include('../../f_function.php');
+include $_SERVER['DOCUMENT_ROOT'] . '/php/Urlaubsverwaltung/f_function.php';
+?>
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Urlaubsverwaltung der IT-Solution & Design GmbH">
+    <meta name="author" content="Sergiy Stümpel, Marco Wedemeyer, Civan Adam" />
+    <link rel="stylesheet" href="/php/Urlaubsverwaltung/style.css">
+    <title>Datenbankeinträge bearbeiten</title>
+</head>
+<?php
 
 checkStatus();
 
@@ -28,23 +40,38 @@ try {
 
     if ($urlaub) {
         ?>
-        <form action="update_urlaubsantrag.php" method="post">
-            <label for="uid">Urlaubs-ID</label>
-            <input type="number" id="uid" name="uid" value="<?= htmlspecialchars($urlaub['uid']); ?>" required>
-            <label for="pid">Personal-ID:</label>
-            <input type="number" id="pid" name="pid" value="<?= htmlspecialchars($urlaub['pid']); ?>" required>
-            <label for="uanfang">Urlaubsbeginn:</label>
-            <input type="date" id="uanfang" name="uanfang" value="<?= htmlspecialchars($urlaub['uanfang']); ?>" required>
-            <label for="uende">Urlaubsende:</label>
-            <input type="date" id="uende" name="uende" value="<?= htmlspecialchars($urlaub['uende']); ?>" required>
-            <label for="uende">Urlaubstage beantragt:</label>
-            <input type="number" id="ubeantragt" name="ubeantragt" value="<?= htmlspecialchars($urlaub['ubeantragt']); ?>" required>
-            <label for="ugesamt">Gesamturlaubstage pro Jahr:</label>
-            <input type="number" id="ugesamt" name="ugesamt" value="<?= htmlspecialchars($urlaub['ugesamt']); ?>" required>
-            <label for="ugesamt">Aktueller Urlaubsstatus:</label>
-            <input type="text" id="ustatus" name="ustatus" value="<?= htmlspecialchars($urlaub['ustatus']); ?>" required>
-            <input type="submit" value="Aktualisieren">
-        </form>
+        <table border="1">
+            <tr>
+                <th></th>
+                <th>Urlaubs-ID</th>
+                <th>Personal-ID</th>
+                <th>Urlaubsbeginn</th>
+                <th>Urlaubsende</th>
+                <th>Urlaubstage beantragt</th>
+                <th>Gesamturlaubstage pro Jahr</th>
+                <th>Aktueller Urlaubsstatus</th>
+                <th>Aktion</th>
+            </tr>
+            <td>
+                <form action="update_urlaubsantrag.php" method="post">
+                    <td><input type="number" id="uid" name="uid" value="<?= htmlspecialchars($urlaub['uid']); ?>" required></td>
+                    <td><input type="number" id="pid" name="pid" value="<?= htmlspecialchars($urlaub['pid']); ?>" required></td>
+                    <td><input type="date" id="uanfang" name="uanfang" value="<?= htmlspecialchars($urlaub['uanfang']); ?>" required></td>
+                    <td><input type="date" id="uende" name="uende" value="<?= htmlspecialchars($urlaub['uende']); ?>" required></td>
+                    <td><input type="number" id="ubeantragt" name="ubeantragt" value="<?= htmlspecialchars($urlaub['ubeantragt']); ?>" required></td>
+                    <td><input type="number" id="ugesamt" name="ugesamt" value="<?= htmlspecialchars($urlaub['ugesamt']); ?>" required></td>
+                    <td>
+                        <select id="ustatus" name="ustatus" required>
+                            <option value="genehmigt" <?= $urlaub['ustatus'] == 'genehmigt' ? 'selected' : ''; ?>>Genehmigt</option>
+                            <option value="abgelehnt" <?= $urlaub['ustatus'] == 'abgelehnt' ? 'selected' : ''; ?>>Abgelehnt</option>
+                            <option value="ausstehend" <?= $urlaub['ustatus'] == 'ausstehend' ? 'selected' : ''; ?>>Ausstehend</option>
+                        </select>
+                    </td>
+
+                    <td><input type="submit" value="Aktualisieren"></td>
+                </form>
+            </tr>
+        </table>
         <?php
     } else {
         echo "Keine Daten gefunden.";
@@ -54,7 +81,6 @@ try {
 } catch (Exception $e) {
     die("Allgemeiner Fehler: " . $e->getMessage());
 }
-?>
-<?php
-include "../footer.html";
+
+include $_SERVER['DOCUMENT_ROOT'] . "/php/Urlaubsverwaltung/include/footer.html";
 ?>

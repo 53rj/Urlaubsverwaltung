@@ -29,7 +29,7 @@ $conn = connServer();
                 <td><?= htmlspecialchars($antrag['ugesamt']); ?></td>
                 <td><?= htmlspecialchars($antrag['ustatus']); ?></td>
                 <td>
-                    <form action="./include/tabellenanzeigen/edit_urlaubsantrag.php" method="post" style="display: inline;">
+                    <form action="./tabellenanzeigen/edit_urlaubsantrag.php" method="post" style="display: inline;">
                         <input type="hidden" name="uid" value="<?= $antrag['uid']; ?>">
                         <input type="submit" value="Bearbeiten">
                     </form>

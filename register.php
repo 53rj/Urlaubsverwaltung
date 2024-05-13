@@ -3,7 +3,7 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-include "include/meta.html";
+include "include/meta.php";
 include "f_function.php";
 connServer();
 checkStatus();
@@ -16,7 +16,7 @@ include "include/register.html";
 
 <head>
     <title>Registrierung</title>
-    <script src="registration.js"></script>
+    <script src="/registration.js"></script>
 </head>
 
 <body>
@@ -54,7 +54,6 @@ include "include/register.html";
                         exit;
                     } else {
                         addUser($pdo, $vorname, $nachname, $status, $hashedPasswort);
-                        // message einbauen dass user mit der "pid" erstellt wurde??
                     }
                 }
             } else {

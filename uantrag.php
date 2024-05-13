@@ -2,7 +2,7 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-include "include/meta.html";
+include "include/meta.php";
 include "f_function.php";
 checkStatus();
 ?>
@@ -25,6 +25,7 @@ checkStatus();
         <?php
         if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["ubeginn"]) && isset($_POST["uende"])) {
             urlaubsantrag($_SESSION['personal_id'], $_POST["ubeginn"], $_POST["uende"]);
+            echo $_SESSION['personal_id'], $_POST["ubeginn"], $_POST["uende"];
         }
         ?>
 </body>

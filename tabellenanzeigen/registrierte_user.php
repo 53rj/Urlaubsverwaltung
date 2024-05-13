@@ -27,7 +27,7 @@ $conn = connServer();
                 <td><?= htmlspecialchars($user['resturlaub']); ?></td>
                 <td><?= htmlspecialchars($user['urlaubstage']); ?></td>
                 <td>
-                <form action="./include/tabellenanzeigen/edit_user.php" method="post" style="display: inline;">
+                <form action="./tabellenanzeigen/edit_user.php" method="post" style="display: inline;">
                     <input type="hidden" name="pid" value="<?= $user['pid']; ?>"> 
                     <input type="submit" value="Bearbeiten">
                 </form>

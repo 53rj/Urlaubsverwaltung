@@ -5,8 +5,20 @@ if ($_SESSION['status'] !== 'Admin') {
     exit;
 }
 
-include('../meta.html');
-include('../../f_function.php'); 
+include $_SERVER['DOCUMENT_ROOT'] . '/php/Urlaubsverwaltung/f_function.php';
+?>
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Urlaubsverwaltung der IT-Solution & Design GmbH">
+    <meta name="author" content="Sergiy Stümpel, Marco Wedemeyer, Civan Adam" />
+    <link rel="stylesheet" href="/php/Urlaubsverwaltung/style.css">
+    <title>Datenbankeinträge bearbeiten</title>
+</head>
+<?php 
 
 checkStatus();
 
@@ -28,19 +40,27 @@ try {
 
     if ($krankheit) {
         ?>
-        <form action="update_krankheit.php" method="post">
-            <label for="kid">Arbeitsunfähigkeits-ID</label>
-            <input type="number" id="kid" name="kid" value="<?= htmlspecialchars($krankheit['kid']); ?>" required>
-            <label for="pid">Personal-ID:</label>
-            <input type="number" id="pid" name="pid" value="<?= htmlspecialchars($krankheit['pid']); ?>" required>
-            <label for="kanfang">Beginn:</label>
-            <input type="date" id="kanfang" name="kanfang" value="<?= htmlspecialchars($krankheit['kanfang']); ?>" required>
-            <label for="kende">Ende:</label>
-            <input type="date" id="kende" name="kende" value="<?= htmlspecialchars($krankheit['kende']); ?>" required>
-            <label for="kgesamt">Gesamtdauer:</label>
-            <input type="number" id="kgesamt" name="kgesamt" value="<?= htmlspecialchars($krankheit['kgesamt']); ?>" required>
-            <input type="submit" value="Aktualisieren">
-        </form>
+        <table border="1">
+            <tr>
+                <th></th>
+                <th>AU-ID</th>
+                <th>Personal-ID</th>
+                <th>AU-Beginn</th>
+                <th>AU-Ende</th>
+                <th>Anzahl der gesamten AU-Tage</th>
+                <th>Aktion</th>
+            </tr>
+            <td>
+                <form action="update_krankheit.php" method="post">
+                    <td><input type="number" id="kid" name="kid" value="<?= htmlspecialchars($kid); ?>" required></td>
+                    <td><input type="number" id="pid" name="pid" value="<?= htmlspecialchars($krankheit['pid']); ?>" required></td>
+                    <td><input type="date" id="kanfang" name="kanfang" value="<?= htmlspecialchars($krankheit['kanfang']); ?>" required></td>
+                    <td><input type="date" id="kende" name="kende" value="<?= htmlspecialchars($krankheit['kende']); ?>" required></td>
+                    <td><input type="number" id="kgesamt" name="kgesamt" value="<?= htmlspecialchars($krankheit['kgesamt']); ?>" required></td>
+                    <td><input type="submit" value="Aktualisieren">
+                </form>
+            </tr>
+        </table>
         <?php
     } else {
         echo "Keine Daten gefunden.";
@@ -50,7 +70,6 @@ try {
 } catch (Exception $e) {
     die("Allgemeiner Fehler: " . $e->getMessage());
 }
-?>
-<?php
-include "../footer.html";
+
+include $_SERVER['DOCUMENT_ROOT'] . "/php/Urlaubsverwaltung/include/footer.html";
 ?>
