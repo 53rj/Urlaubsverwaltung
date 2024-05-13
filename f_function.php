@@ -26,59 +26,19 @@
 //     return "Das Passwort ist gültig";
 // }
 
-function addUser($pdo, $vorname, $nachname, $status, $passwort){
-    $statement = $pdo->prepare("INSERT INTO personal (vorname, nachname, status, passwort) VALUES (?, ?, ?, ?)");
+function addUser($pdo, $vorname, $nachname, $status, $passwort)
+{
+    $statement = $pdo->prepare("INSERT INTO personal (vorname, nachname, status, passwort, urlaubstage, resturlaub) VALUES (?, ?, ?, ?, 30, 30)");
     $statement->execute([$vorname, $nachname, $status, $passwort]);
     echo "Registrierung erfolgreich ausgeführt.";
 }
 
-function kommende_urlaube_anzeigen(){
-    $conn = connServer();
-    $sql = "SELECT p.vorname, p.nachname, u.uanfang, u.uende 
-    FROM personal p, urlaubsantrag u 
-    WHERE u.pid = p.pid 
-    AND u.ustatus = 'genehmigt' 
-    AND u.uende > CURRENT_DATE();";
-    $urlaube = $conn->query($sql);
-    $anzeige = array();
-    while ($row = $urlaube->fetch(PDO::FETCH_ASSOC)) {
-        $anzeige = $row;
-        echo "<tr>";
-        foreach ($anzeige as $kommende_urlaube) {
-            echo  "<td>" . $kommende_urlaube . "</td>";
-        }
-        echo '<td>
-            <button type="button" class="btn-allow">Annehmen</button>
-            <button type="button" class="btn-deny">Ablehnen</button>
-            </td>';
-        echo "</tr>";
-    }
-}
 
-function antrag_anzeigen(){
-    $conn = connServer();
-    $sql = "SELECT p.vorname, p.nachname, u.uanfang, u.uende 
-            FROM personal p, urlaubsantrag u 
-            WHERE u.pid = p.pid 
-            AND u.ustatus = 'beantragt' 
-            AND u.uende > CURRENT_DATE();";
-    $urlaube = $conn->query($sql);
-    $anzeige = array();
-    while ($row = $urlaube->fetch(PDO::FETCH_ASSOC)) {
-        $anzeige = $row;
-        echo "<tr>";
-        foreach ($anzeige as $kommende_urlaube) {
-            echo  "<td>" . $kommende_urlaube . "</td>";
-        }
-        echo '<td>
-            <button type="button" class="btn-allow">Annehmen</button>
-            <button type="button" class="btn-deny">Ablehnen</button>
-            </td>';
-        echo "</tr>";
-    }
-}
 
-function connServer(){
+
+
+function connServer()
+{
     try {
         $pdo = new PDO('mysql:host=localhost;dbname=urlaubsverwaltung', 'root', '');
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -89,7 +49,8 @@ function connServer(){
     }
 }
 
-function showAllData($pdo, $zahl){
+function showAllData($pdo, $zahl)
+{
     try {
         $tableMap = [
             1 => "personal",
@@ -110,15 +71,16 @@ function showAllData($pdo, $zahl){
     }
 }
 
-function login(){
-    
+function login()
+{
+
     session_start();
     $pid = $_POST["pid"];
     $passwort = $_POST["passwort"];
 
     $conn = connServer();
     $_SESSION["status"] = "SELECT personal.status FROM personal WHERE pid = $pid AND passwort = $passwort";
-    
+
     if ($_SESSION["status"] == "Angestellter") {
         // echo "Ihr login als Angestellter war erfolgreich, Sie Können jetzt einen Urlaubsantrag stellen";
         // sieht man eh nicht, weil man automatisch auf der Seite ist
@@ -141,14 +103,15 @@ function login(){
     }
 }
 
-function checkStatus() {
+function checkStatus()
+{
     if (isset($_SESSION['status'])) {
         switch ($_SESSION['status']) {
             case "Angestellter":
                 include "include/angestellterheader.html";
                 break;
-            case "Abteilungsleiter":
-                include "include/abteilungsleiterheader.html";
+            case "Personalleiter":
+                include "include/Personalleiterheader.html";
                 break;
             case "Admin":
                 include "include/adminheader.html";
@@ -160,11 +123,128 @@ function checkStatus() {
             header("Location: login.php");
             exit;
         } else {
-            session_unset(); 
-            session_destroy(); 
+            session_unset();
+            session_destroy();
             header("Location: login.php");
             exit;
         }
     }
 }
 
+
+function nichtVerplanteUrlaubstage()
+{
+    $pid = $_SESSION['personal_id'];
+    $conn = connServer();
+    $sql = "SELECT p.resturlaub
+            FROM personal p 
+            WHERE p.pid = $pid";
+    $stmt = $conn->query($sql);
+    $result = $stmt->fetch(PDO::FETCH_ASSOC); // Fetch als assoziatives Array
+    $resturlaub = $result['resturlaub']; // Zugriff auf das spezifische Feld
+    echo "<p>" . $resturlaub . "</p>";
+}
+
+function freigabenUrlaub($wert)
+{
+    $pid = $_SESSION['personal_id'];
+    $conn = connServer();
+    $sql = "SELECT u.uanfang, u.uende, u.ubeantragt
+            FROM personal p, urlaubsantrag u 
+            WHERE p.pid = $pid 
+            AND u.pid = p.pid
+            AND u.ustatus = '$wert'";
+    $genehmigteUrlaube = $conn->query($sql);
+    $anzeige = array();
+    while ($row = $genehmigteUrlaube->fetch(PDO::FETCH_ASSOC)) {
+        $anzeige = $row;
+        echo "<tr>";
+        foreach ($anzeige as $kommende_urlaube) {
+            echo  "<td>" . $kommende_urlaube . "</td>";
+        }
+        echo "</tr>";
+    }
+}
+
+function urlaubsantrag($pid, $urlaubsanfang, $urlaubsende)
+{
+    $pdo = connServer();
+    $stmt = $pdo->prepare("CREATE TEMPORARY TABLE IF NOT EXISTS TempUrlaub (uanfang DATE, uende DATE, tage INT);
+    -- Berechnung und Einfügen der Urlaubstage unter Ausschluss der Wochenenden
+    INSERT INTO TempUrlaub (uanfang, uende, tage)
+    VALUES (:uanfang, :uende,
+            (DATEDIFF(:uende, :uanfang) + 1
+             - ((DATEDIFF(:uende, :uanfang) + 1) / 7 * 2)
+             + (CASE WHEN WEEKDAY(:uanfang ) = 6 THEN 1 ELSE 0 END)
+             + (CASE WHEN WEEKDAY(:uende) = 5 THEN 1 ELSE 0 END)));
+    -- Daten von der temporären Tabelle in die Haupttabelle übertragen
+    INSERT INTO urlaubsantrag (pid, uanfang, uende, ubeantragt, ugesamt, ustatus)
+    SELECT :pid, uanfang, uende, tage, 30, 'beantragt'
+    FROM TempUrlaub;
+    -- Lösche die temporäre Tabelle nach Gebrauch
+    DROP TEMPORARY TABLE IF EXISTS TempUrlaub;");
+    $stmt->bindParam(":pid", $pid);
+    $stmt->bindParam(":uanfang", $urlaubsanfang);
+    $stmt->bindParam(":uende", $urlaubsende);
+    $stmt->execute();
+}
+
+function urlaubsgenehmigung($pid, $uid)
+{
+    $pdo = connServer();
+    $stmt1 = $pdo->prepare(
+        "UPDATE urlaubsantrag SET ustatus = 'genehmigt' WHERE uid = :uid;
+        UPDATE personal SET resturlaub = resturlaub - (SELECT ubeantragt FROM urlaubsantrag WHERE pid = :pid AND uid = :uid) 
+        WHERE pid = :pid"
+    );
+    $stmt1->bindParam(":pid", $pid);
+    $stmt1->bindParam(":uid", $uid);
+    $stmt1->execute();
+}
+function urlaubsablehnung($uid)
+{
+    $pdo = connServer();
+    $stmt1 = $pdo->prepare("UPDATE urlaubsantrag SET ustatus = 'abgelehnt' WHERE uid = :uid");
+    $stmt1->bindParam(":uid", $uid);
+    $stmt1->execute();
+}
+
+function kommende_urlaube_anzeigen()
+{
+    $conn = connServer();
+    $sql = "SELECT u.uid, p.vorname, p.nachname, u.uanfang, u.uende 
+            FROM personal p
+            JOIN urlaubsantrag u ON u.pid = p.pid 
+            WHERE u.ustatus = 'beantragt' AND u.uende > CURRENT_DATE()";
+    $urlaube = $conn->prepare($sql);
+    $urlaube->execute();
+
+    while ($row = $urlaube->fetch(PDO::FETCH_ASSOC)) {
+        echo "<tr>";
+        foreach ($row as $key => $value) {
+            if ($key != 'uid') {
+                echo "<td>" . $value . "</td>";
+            }
+        }
+
+
+        echo '<td>
+                <form method="POST">
+                <input type="hidden" name="uid" value="' . ($row['uid']) . '">
+                <button type="submit" class="btn-allow" name="uannehmen">Annehmen</button>
+                <button type="submit" class="btn-deny" name="uablehnen">Ablehnen</button>
+              </form>
+             </td>';
+        echo "</tr>";
+    }
+}
+
+function uidbekommen($pid, $uanfang, $uende)
+{
+    $pdo = connServer();
+    $stmt = $pdo->prepare("SELECT  uid FROM ulaubsantrag WHERE pid = :pid AND uende = :uende AND uanfang = :uanfang");
+    $stmt->bindParam(":pid", $pid);
+    $stmt->bindParam(":uanfang", $uanfang);
+    $stmt->bindParam(":uende", $uende);
+    $stmt->execute();
+}

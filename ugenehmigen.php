@@ -7,6 +7,7 @@ include "f_function.php";
 checkStatus();
 ?>
 <h1>Nicht bearbeitete Urlaubsanträge:</h1>
+
 <div class="container">
     <table class="table">
         <thead>
@@ -20,13 +21,25 @@ checkStatus();
         </thead>
         <tbody id="pending-requests">
             <tr>
-                <?php kommende_urlaube_anzeigen(); ?>
+                <?php
+                kommende_urlaube_anzeigen();
+                $pid = $_SESSION['personal_id'];
+                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                    if (isset($_POST['uannehmen'])) {
+                        if (isset($_POST['uid'])) {
+                            urlaubsgenehmigung($pid, $_POST['uid']);
+                        }
+                    } elseif (isset($_POST['uablehnen'])) {
+                        if (isset($_POST['uid'])) {
+                            urlaubsablehnung($_POST['uid']);
+                        }
+                    }
+                }
+                ?>
             </tr>
-            <!-- PHP: Ende der foreach-Schleife -->
         </tbody>
     </table>
-    <!-- PHP: Platzhalter für das Laden der Anträge -->
-    <!-- PHP: Funktionen für das Annehmen/Ablehnen der Anträge hier implementieren -->
+
 </div>
 <?php
 include "include/footer.html";
