@@ -30,9 +30,13 @@ function addUser($pdo, $vorname, $nachname, $status, $passwort)
 {
     $statement = $pdo->prepare("INSERT INTO personal (vorname, nachname, status, passwort, urlaubstage, resturlaub) VALUES (?, ?, ?, ?, 30, 30)");
     $statement->execute([$vorname, $nachname, $status, $passwort]);
-    echo "Registrierung erfolgreich ausgeführt.";
+    $pid = $pdo->lastInsertId();
+    if ($pid) {
+        echo "Registrierung des Users mit der ID: $pid erfolgreich ausgeführt.";
+    } else {
+        echo "Es gab ein Problem bei der Registrierung des Users.";
+    }
 }
-
 
 
 
@@ -162,26 +166,39 @@ function freigabenUrlaub($wert)
 
 function urlaubsantrag($pid, $urlaubsanfang, $urlaubsende)
 {
-    $pdo = connServer();
-    $stmt = $pdo->prepare("CREATE TEMPORARY TABLE IF NOT EXISTS TempUrlaub (uanfang DATE, uende DATE, tage INT);
-    -- Berechnung und Einfügen der Urlaubstage unter Ausschluss der Wochenenden
-    INSERT INTO TempUrlaub (uanfang, uende, tage)
-    VALUES (:uanfang, :uende,
-            (DATEDIFF(:uende, :uanfang) + 1
-             - ((DATEDIFF(:uende, :uanfang) + 1) / 7 * 2)
-             + (CASE WHEN WEEKDAY(:uanfang ) = 6 THEN 1 ELSE 0 END)
-             + (CASE WHEN WEEKDAY(:uende) = 5 THEN 1 ELSE 0 END)));
-    -- Daten von der temporären Tabelle in die Haupttabelle übertragen
-    INSERT INTO urlaubsantrag (pid, uanfang, uende, ubeantragt, ugesamt, ustatus)
-    SELECT :pid, uanfang, uende, tage, 30, 'beantragt'
-    FROM TempUrlaub;
-    -- Lösche die temporäre Tabelle nach Gebrauch
-    DROP TEMPORARY TABLE IF EXISTS TempUrlaub;");
-    $stmt->bindParam(":pid", $pid);
-    $stmt->bindParam(":uanfang", $urlaubsanfang);
-    $stmt->bindParam(":uende", $urlaubsende);
-    $stmt->execute();
+    if ($urlaubsanfang < $urlaubsende) {
+       
+        $pdo = connServer();
+        $stmt = $pdo->prepare("CREATE TEMPORARY TABLE IF NOT EXISTS TempUrlaub (uanfang DATE, uende DATE, tage INT);
+        -- Berechnung und Einfügen der Urlaubstage unter Ausschluss der Wochenenden
+        INSERT INTO TempUrlaub (uanfang, uende, tage)
+        VALUES (:uanfang, :uende,
+                (DATEDIFF(:uende, :uanfang) + 1
+                - ((DATEDIFF(:uende, :uanfang) + 1) / 7 * 2)
+                + (CASE WHEN WEEKDAY(:uanfang ) = 6 THEN 1 ELSE 0 END)
+                + (CASE WHEN WEEKDAY(:uende) = 5 THEN 1 ELSE 0 END)));
+        -- Daten von der temporären Tabelle in die Haupttabelle übertragen
+        INSERT INTO urlaubsantrag (pid, uanfang, uende, ubeantragt, ugesamt, ustatus)
+        SELECT :pid, uanfang, uende, tage, 30, 'beantragt'
+        FROM TempUrlaub;
+        -- Lösche die temporäre Tabelle nach Gebrauch
+        DROP TEMPORARY TABLE IF EXISTS TempUrlaub;");
+        $stmt->bindParam(":pid", $pid);
+        $stmt->bindParam(":uanfang", $urlaubsanfang);
+        $stmt->bindParam(":uende", $urlaubsende);
+        $stmt->execute();
+
+        if ($stmt->rowCount() > 0) {
+            echo "Urlaubsantrag erfolgreich eingetragen!";
+        } else {
+            echo "Der Urlaubsantrag konnte nicht eingetragen werden.";
+        }
+    }
+    else {
+        echo 'Urlaubsanfang kann nicht nach dem Urlaubsende sein! Bitte Eingaben überprüfen!';
+    }
 }
+
 
 function urlaubsgenehmigung($pid, $uid)
 {
