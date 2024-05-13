@@ -11,12 +11,12 @@ checkStatus();
     <div class="maincontent">
 
         <section id="utage">
-            <h2>Verfügbare Urlaubstage</h2>
+            <h2>Nicht verplante Urlaubstage</h2>
             <p><?php nichtVerplanteUrlaubstage(); ?></p>
         </section>
 
         <section id="ustatus_1">
-            <h2>Freigegebender Urlaub</h2>
+            <h2>Genehmigter Urlaub</h2>
             <table border='1'>
                 <tr>
                     <?php
@@ -27,7 +27,7 @@ checkStatus();
         </section>
 
         <section id="ustatus_3">
-            <h2>Offene Urlaubsanfragen</h2>
+            <h2>Gestellte Urlaubsanträge</h2>
             <table border='1'>
                 <tr>
                     <?php
@@ -38,7 +38,7 @@ checkStatus();
         </section>
 
         <section id="ustatus_2">
-            <h2>Abgelehnter Urlaub</h2>
+            <h2>Nicht genehmigter Urlaub</h2>
             <table border='1'>
                 <tr>
                     <?php

@@ -5,9 +5,6 @@ if ($_SESSION['status'] !== 'Admin') {
     exit;
 }
 $conn = connServer();
-if (!$conn) {
-    die("Datenbankverbindung konnte nicht hergestellt werden.");
-}
 ?>
 <h1>Urlaubstabelle</h1>
 
@@ -32,7 +29,7 @@ if (!$conn) {
                 <td><?= htmlspecialchars($antrag['ugesamt']); ?></td>
                 <td><?= htmlspecialchars($antrag['ustatus']); ?></td>
                 <td>
-                    <form action="edit_urlaubsantrag.php" method="post" style="display: inline;">
+                    <form action="./include/tabellenanzeigen/edit_urlaubsantrag.php" method="post" style="display: inline;">
                         <input type="hidden" name="uid" value="<?= $antrag['uid']; ?>">
                         <input type="submit" value="Bearbeiten">
                     </form>

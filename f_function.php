@@ -82,22 +82,16 @@ function login()
     $_SESSION["status"] = "SELECT personal.status FROM personal WHERE pid = $pid AND passwort = $passwort";
 
     if ($_SESSION["status"] == "Angestellter") {
-        // echo "Ihr login als Angestellter war erfolgreich, Sie Können jetzt einen Urlaubsantrag stellen";
-        // sieht man eh nicht, weil man automatisch auf der Seite ist
         $_SESSION['logged_in'] = true;
         include "include/angestellterheader.html";
     }
 
     if ($_SESSION["status"] == "Abteilungsleiter") {
-        // echo "Ihr login als Abteilungsleiter war erfolgreich, Sie Können jetzt einen Urlaubsantrag stellen";
-        // sieht man eh nicht, weil man automatisch auf der Seite ist
         $_SESSION['logged_in'] = true;
-        include "include/Abteilungsleiterheader.html";
+        include "include/abteilungsleiterheader.html";
     }
 
     if ($_SESSION["status"] == "Admin") {
-        // echo "Ihr login als Admin war erfolgreich";
-        // sieht man eh nicht, weil man automatisch auf der Seite ist
         $_SESSION['logged_in'] = true;
         include "include/adminheader.html";
     }
@@ -110,8 +104,8 @@ function checkStatus()
             case "Angestellter":
                 include "include/angestellterheader.html";
                 break;
-            case "Personalleiter":
-                include "include/Personalleiterheader.html";
+            case "Abteilungsleiter":
+                include "include/abteilungsleiterheader.html";
                 break;
             case "Admin":
                 include "include/adminheader.html";

@@ -257,3 +257,35 @@ select {
 .table tr:nth-child(even) {
     background-color: #767585;
 }
+
+/* --------------------------------------------------------------------------- */
+/* ---------------------------------Sections---------------------------------- */
+/* --------------------------------------------------------------------------- */
+
+section {
+    border: 3px solid #ddd;
+    padding: 15px;
+    margin-bottom: 20px;
+    display: block;
+}
+
+section h2 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+#ustatus_1 {
+    border-color: #4CAF50;
+}
+
+#ustatus_2 {
+    border-color: #f44336;
+}
+
+#ustatus_3 {
+    border-color: #FF9800;
+}
+
+#utage {
+    border-color: #2196F3;
+}
