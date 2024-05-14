@@ -30,6 +30,3 @@ checkStatus();
         }
         ?>
 </body>
-<?php
-include_once "./footer.html";
-?>

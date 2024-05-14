@@ -47,6 +47,4 @@ $conn = connServer();
     </table>
 <?php else : ?>
     <p>Keine Daten gefunden.</p>
-<?php endif; 
-include_once "./footer.html";
-?>
+<?php endif; ?>

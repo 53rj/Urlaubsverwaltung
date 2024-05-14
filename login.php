@@ -36,6 +36,5 @@ if (!empty($_POST))
 }
 
     }
-    include_once "./footer.html";    
 ?>
 

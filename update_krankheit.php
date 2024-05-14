@@ -5,6 +5,7 @@ if (session_status() == PHP_SESSION_NONE) {
 
 include_once "./meta.html";
 include_once './f_function.php';
+
 checkStatus();
 if ($_SESSION['status'] !== 'Admin') {
     echo "Zugriff verweigert!";
@@ -49,6 +50,3 @@ try {
 } catch (Exception $e) {
     die("Allgemeiner Fehler: " . $e->getMessage());
 }
-
-include_once "./footer.html";
-?>

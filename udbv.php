@@ -25,7 +25,3 @@ if ($tableChoice == 1) {
 } elseif ($tableChoice == 3) {
     include "./krankheitstabelle.php";
 }
-
-
-include_once "./footer.html";
-?>

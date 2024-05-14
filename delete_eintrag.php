@@ -50,5 +50,4 @@ try {
 } catch (Exception $e) {
     die("Allgemeiner Fehler: " . $e->getMessage());
 }
-include_once "./footer.html";
 ?>

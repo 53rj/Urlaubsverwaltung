@@ -9,17 +9,25 @@ include_once './f_function.php';
 checkStatus();
 
 ?>
-<main>
-    <div class="maincontent">
 
-        <section id="utage">
+<section id="utage">
             <h2>Nicht verplante Urlaubstage</h2>
-            <p><?php nichtVerplanteUrlaubstage(); ?></p>
+            <table border='1'>
+                <tr>
+                    <th>Resturlaubstage</th>
+                </tr>
+                <tr>
+                <td><?php nichtVerplanteUrlaubstage(); ?></td>
+                </tr>
+            </table>
         </section>
 
         <section id="ustatus_1">
             <h2>Genehmigter Urlaub</h2>
             <table border='1'>
+                <th>Urlaubsanfang</th>
+                <th>Urlaubsende</th>
+                <th>Urlaubsdauer</th>
                 <tr>
                     <?php
                     $wert = 'genehmigt';
@@ -31,6 +39,9 @@ checkStatus();
         <section id="ustatus_3">
             <h2>Gestellte Urlaubsanträge</h2>
             <table border='1'>
+                <th>Urlaubsanfang</th>
+                <th>Urlaubsende</th>
+                <th>Urlaubsdauer</th>
                 <tr>
                     <?php
                     $wert = 'beantragt';
@@ -42,6 +53,9 @@ checkStatus();
         <section id="ustatus_2">
             <h2>Nicht genehmigter Urlaub</h2>
             <table border='1'>
+                <th>Urlaubsanfang</th>
+                <th>Urlaubsende</th>
+                <th>Urlaubsdauer</th>
                 <tr>
                     <?php
                     $wert = 'abgelehnt';
@@ -50,8 +64,3 @@ checkStatus();
             </table>
         </section>
 
-    </div>
-</main>
-<?php
-include_once "./footer.html";
-?>

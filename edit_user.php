@@ -67,5 +67,4 @@ try {
     die("Allgemeiner Fehler: " . $e->getMessage());
 }
 
-include_once "./footer.html";
 ?>

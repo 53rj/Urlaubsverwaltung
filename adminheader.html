@@ -1,15 +1,23 @@
 <body>
     <header>
+        <div class="header-links">
+            <a href="./index.php" class="header-link">
+                <img src="./home-icon.png" alt="Home" class="header-icon"> Zurück zur Homepage
+            </a>
+            <a href="./logout.php" class="header-link">
+                <img src="./logout-icon.png" alt="Logout" class="header-icon"> Sitzung beenden
+            </a>
+        </div>
         <div class="content">
             <h1 style="margin-left: 40px">IT - Solutions GmbH Urlaubsverwaltung</h1>
             <div class="nav-bar">
                 <div class="navigation">
                     <nav class="nav" role="navigation">
                         <ul class="navigation-bar">
-                            <li><a href="./index.php">Eigene Urlaubsübersicht</a></li>            <!-- Problematik bei einer anderen Ordneranordnung???-->
-                            <li><a href="./uantrag.php">Neuen Urlaub beantragen</a></li>          <!-- Problematik bei einer anderen Ordneranordnung???-->
-                            <li><a href="./register.php">Neuen User anlegen</a></li>              <!-- Problematik bei einer anderen Ordneranordnung???-->
-                            <li class="has-sub"><a href="./udbv.php">Mit Datenbank verbinden</a>  <!-- Problematik bei einer anderen Ordneranordnung???-->
+                            <li><a href="./index.php">Eigene Urlaubsübersicht</a></li>            
+                            <li><a href="./uantrag.php">Neuen Urlaub beantragen</a></li>          
+                            <li><a href="./register.php">Neuen User anlegen</a></li>              
+                            <li class="has-sub"><a href="./udbv.php">Mit Datenbank verbinden</a>  
                                 <ul class="dropdown">
                                     <li><a href="./udbv.php?table=1">Personal</a></li>
                                     <li><a href="./udbv.php?table=2">Urlaubsanträge</a></li>
@@ -22,4 +30,5 @@
             </div>
         </div>
     </header>
-
+    <main>
+        <div class="main-content">
