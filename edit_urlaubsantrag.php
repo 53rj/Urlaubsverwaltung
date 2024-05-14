@@ -50,7 +50,7 @@ try {
                         <select id="ustatus" name="ustatus" required>
                             <option value="genehmigt" <?= $urlaub['ustatus'] == 'genehmigt' ? 'selected' : ''; ?>>Genehmigt</option>
                             <option value="abgelehnt" <?= $urlaub['ustatus'] == 'abgelehnt' ? 'selected' : ''; ?>>Abgelehnt</option>
-                            <option value="ausstehend" <?= $urlaub['ustatus'] == 'ausstehend' ? 'selected' : ''; ?>>Ausstehend</option>
+                            <option value="ausstehend" <?= $urlaub['ustatus'] == 'beantragt' ? 'selected' : ''; ?>>Beantragt</option>
                         </select>
                     </td>
 
