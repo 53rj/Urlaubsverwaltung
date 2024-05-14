@@ -1,24 +1,10 @@
 <?php
-session_start();
-if ($_SESSION['status'] !== 'Admin') {
-    echo "Zugriff verweigert!";
-    exit;
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
 }
 
-include $_SERVER['DOCUMENT_ROOT'] . '/php/Urlaubsverwaltung/f_function.php';
-?>
-<!DOCTYPE html>
-<html lang="de">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Urlaubsverwaltung der IT-Solution & Design GmbH">
-    <meta name="author" content="Sergiy Stümpel, Marco Wedemeyer, Civan Adam" />
-    <link rel="stylesheet" href="/php/Urlaubsverwaltung/style.css">
-    <title>Datenbankeinträge bearbeiten</title>
-</head>
-<?php
+include_once "./meta.html";
+include_once './f_function.php';
 
 checkStatus();
 
@@ -81,6 +67,5 @@ try {
 } catch (Exception $e) {
     die("Allgemeiner Fehler: " . $e->getMessage());
 }
-
-include $_SERVER['DOCUMENT_ROOT'] . "/php/Urlaubsverwaltung/include/footer.html";
+include_once "./footer.html";
 ?>

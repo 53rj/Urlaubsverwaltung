@@ -2,8 +2,10 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-include "include/meta.php";
-include "f_function.php";
+
+include_once "./meta.html";
+include_once './f_function.php';
+
 checkStatus();
 
 ?>
@@ -51,5 +53,5 @@ checkStatus();
     </div>
 </main>
 <?php
-include "include/footer.html";
+include_once "./footer.html";
 ?>

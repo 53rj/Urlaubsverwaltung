@@ -2,8 +2,9 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-include "include/meta.php";
-include "f_function.php";
+
+include_once "./meta.html";
+include_once './f_function.php';
 checkStatus();
 if ($_SESSION['status'] !== 'Admin') {
     echo "Zugriff verweigert!";
@@ -18,12 +19,13 @@ $antraege = showAllData($pdo, $tableChoice);
 $krankheiten = showAllData($pdo, $tableChoice);
 
 if ($tableChoice == 1) {
-    include "tabellenanzeigen/registrierte_user.php";
+    include "./personaltabelle.php";
 } elseif ($tableChoice == 2) {
-    include "tabellenanzeigen/urlaubstabelle.php";
+    include "./urlaubstabelle.php";
 } elseif ($tableChoice == 3) {
-    include "tabellenanzeigen/krankheitstabelle.php";
+    include "./krankheitstabelle.php";
 }
 
 
-include "include/footer.html";
+include_once "./footer.html";
+?>

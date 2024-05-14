@@ -2,13 +2,14 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-include "include/meta.php";
-include "f_function.php";
+
+include_once "./meta.html";
+include_once './f_function.php';
 $pdo = connServer();
 
 if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
     echo "Sie sind bereits eingeloggt!";
-    header("Location: index.php");
+    header("Location: ./index.php");
     exit;
 }
 
@@ -35,5 +36,6 @@ if (!empty($_POST))
 }
 
     }
+    include_once "./footer.html";    
 ?>
 

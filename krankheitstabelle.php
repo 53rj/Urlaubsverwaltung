@@ -1,10 +1,15 @@
 <?php
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 if ($_SESSION['status'] !== 'Admin') {
     echo "Zugriff verweigert!";
     exit;
 }
-include $_SERVER['DOCUMENT_ROOT'] . '/php/Urlaubsverwaltung/f_function.php';
+
+include_once "./meta.html";
+include_once './f_function.php';
+
 $conn = connServer();
 ?>
 <h1>Registrierte AU-Fälle:</h1>
@@ -26,11 +31,11 @@ $conn = connServer();
                 <td><?= htmlspecialchars($krankheit['kende']); ?></td>
                 <td><?= htmlspecialchars($krankheit['kgesamt']); ?></td>
                 <td>
-                    <form action="./tabellenanzeigen/edit_krankheit.php" method="post" style="display: inline;">
+                    <form action="./edit_krankheit.php" method="post" style="display: inline;">
                         <input type="hidden" name="kid" value="<?= $krankheit['kid']; ?>">
                         <input type="submit" value="Bearbeiten">
                     </form>
-                    <form action="./tabellenanzeigen/delete_eintrag.php" method="post" style="display: inline;">
+                    <form action="./delete_eintrag.php" method="post" style="display: inline;">
                         <input type="hidden" name="kid" value="<?= $krankheit['kid']; ?>">
                         <input type="submit" value="Löschen" onclick="return confirm('Sind Sie sicher, dass Sie diesen Krankheitseintag möchten?');">
                     </form>
@@ -40,4 +45,6 @@ $conn = connServer();
     </table>
 <?php else : ?>
     <p>Keine Daten gefunden.</p>
-<?php endif; ?>
+<?php endif;
+include_once "./footer.html";
+?>

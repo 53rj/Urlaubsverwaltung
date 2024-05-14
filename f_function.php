@@ -26,6 +26,7 @@
 //     return "Das Passwort ist gültig";
 // }
 
+
 function addUser($pdo, $vorname, $nachname, $status, $passwort)
 {
     $statement = $pdo->prepare("INSERT INTO personal (vorname, nachname, status, passwort, urlaubstage, resturlaub) VALUES (?, ?, ?, ?, 30, 30)");
@@ -87,17 +88,17 @@ function login()
 
     if ($_SESSION["status"] == "Angestellter") {
         $_SESSION['logged_in'] = true;
-        include "include/angestellterheader.html";
+        include_once "./angestellterheader.html";
     }
 
     if ($_SESSION["status"] == "Abteilungsleiter") {
         $_SESSION['logged_in'] = true;
-        include "include/abteilungsleiterheader.html";
+        include_once "./abteilungsleiterheader.html";
     }
 
     if ($_SESSION["status"] == "Admin") {
         $_SESSION['logged_in'] = true;
-        include "include/adminheader.html";
+        include_once "./adminheader.html";
     }
 }
 
@@ -106,24 +107,24 @@ function checkStatus()
     if (isset($_SESSION['status'])) {
         switch ($_SESSION['status']) {
             case "Angestellter":
-                include "include/angestellterheader.html";
+                include_once "./angestellterheader.html";
                 break;
             case "Abteilungsleiter":
-                include "include/abteilungsleiterheader.html";
+                include_once "./abteilungsleiterheader.html";
                 break;
             case "Admin":
-                include "include/adminheader.html";
+                include_once "./adminheader.html";
                 break;
         }
     } else {
         if (!isset($_SESSION['attempted_redirect'])) {
             $_SESSION['attempted_redirect'] = true;
-            header("Location: login.php");
+            header("Location: ./login.php");
             exit;
         } else {
             session_unset();
             session_destroy();
-            header("Location: login.php");
+            header("Location: ./login.php");
             exit;
         }
     }
