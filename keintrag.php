@@ -10,8 +10,12 @@ checkStatus();
 <body>
     <form id="keintragForm" method="POST">
         <div class="main_content">
-            <br>
             <div class="calendar-container">
+                <br>
+                <label for="pid">Personal-ID:</label>
+                <br>
+                <input type="int" id="pid" name="pid" required>
+                <br>
                 <label for="akrankheit" class="calendar-label">Krankheitsbeginn:</label>
                 <input type="date" id="akrankheit" name="kbeginn" class="calendar-input">
 
@@ -24,8 +28,8 @@ checkStatus();
         </div>
         <?php
         if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["kbeginn"]) && isset($_POST["kende"])) {
-            urlaubsantrag($_SESSION['personal_id'], $_POST["kbeginn"], $_POST["kende"]);
-            echo $_SESSION['personal_id'], $_POST["kbeginn"], $_POST["kende"];
+            krankheitseintrag($_POST['pid'], $_POST["kbeginn"], $_POST["kende"]);
+            echo $_POST['pid'], $_POST["kbeginn"], $_POST["kende"];
         }
         ?>
 </body>

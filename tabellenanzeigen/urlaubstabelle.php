@@ -1,9 +1,10 @@
 <?php
-
+session_start();
 if ($_SESSION['status'] !== 'Admin') {
     echo "Zugriff verweigert!";
     exit;
 }
+include $_SERVER['DOCUMENT_ROOT'] . '/php/Urlaubsverwaltung/f_function.php';
 $conn = connServer();
 ?>
 <h1>Urlaubstabelle</h1>
@@ -33,7 +34,7 @@ $conn = connServer();
                         <input type="hidden" name="uid" value="<?= $antrag['uid']; ?>">
                         <input type="submit" value="Bearbeiten">
                     </form>
-                    <form action="delete_urlaubsantrag.php" method="post" style="display: inline;">
+                    <form action="./tabellenanzeigen/delete_eintrag.php" method="post" style="display: inline;">
                         <input type="hidden" name="uid" value="<?= $antrag['uid']; ?>">
                         <input type="submit" value="Löschen" onclick="return confirm('Sind Sie sicher, dass Sie diesen Urlaubsantrag löschen möchten?');">
                     </form>

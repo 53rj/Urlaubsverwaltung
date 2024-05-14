@@ -167,7 +167,7 @@ function freigabenUrlaub($wert)
 function urlaubsantrag($pid, $urlaubsanfang, $urlaubsende)
 {
     if ($urlaubsanfang < $urlaubsende) {
-       
+
         $pdo = connServer();
         $stmt = $pdo->prepare("CREATE TEMPORARY TABLE IF NOT EXISTS TempUrlaub (uanfang DATE, uende DATE, tage INT);
         -- Berechnung und Einfügen der Urlaubstage unter Ausschluss der Wochenenden
@@ -188,17 +188,51 @@ function urlaubsantrag($pid, $urlaubsanfang, $urlaubsende)
         $stmt->bindParam(":uende", $urlaubsende);
         $stmt->execute();
 
-        if ($stmt->rowCount() > 0) {
-            echo "Urlaubsantrag erfolgreich eingetragen!";
-        } else {
-            echo "Der Urlaubsantrag konnte nicht eingetragen werden.";
-        }
-    }
-    else {
-        echo 'Urlaubsanfang kann nicht nach dem Urlaubsende sein! Bitte Eingaben überprüfen!';
+        echo "Urlaubsantrag erfolgreich eingetragen!";
+    } else {
+        echo "Der Urlaubsantrag konnte nicht eingetragen werden.";
     }
 }
 
+function krankheitseintrag($pid, $krankheitsanfang, $krankheitsende)
+{
+    if ($krankheitsanfang < $krankheitsende) {
+
+        $pdo = connServer();
+        $stmt = $pdo->prepare("CREATE TEMPORARY TABLE IF NOT EXISTS TempAU (kanfang DATE, kende DATE, tage INT);
+        -- Berechnung und Einfügen der Krankheitstage unter Ausschluss der Wochenenden
+        INSERT INTO TempAU (kanfang, kende, tage)
+        VALUES (:kanfang, :kende,
+                (DATEDIFF(:kende, :kanfang) + 1
+                - ((DATEDIFF(:kende, :kanfang) + 1) / 7 * 2)
+                + (CASE WHEN WEEKDAY(:kanfang ) = 6 THEN 1 ELSE 0 END)
+                + (CASE WHEN WEEKDAY(:kende) = 5 THEN 1 ELSE 0 END)));
+        -- Daten von der temporären Tabelle in die Haupttabelle übertragen
+        INSERT INTO krankheit (pid, kanfang, kende, kgesamt)
+        SELECT :pid, kanfang, kende, tage
+        FROM TempAU;
+        -- Erstattet die Krankheitstage dem Resturlaub wieder gut
+        UPDATE personal 
+        SET resturlaub = resturlaub + (
+        SELECT SUM(DATEDIFF(LEAST(k.kende, u.uende), GREATEST(k.kanfang, u.uanfang)) + 1)
+        FROM krankheit k
+        JOIN urlaubsantrag u ON k.pid = u.pid
+        WHERE k.kanfang <= u.uende
+        AND k.kende >= u.uanfang
+        AND k.pid = :pid)
+        WHERE pid = :pid;
+        -- Lösche die temporäre Tabelle nach Gebrauch
+        DROP TEMPORARY TABLE IF EXISTS TempAU;");
+        $stmt->bindParam(":pid", $pid);
+        $stmt->bindParam(":kanfang", $krankheitsanfang);
+        $stmt->bindParam(":kende", $krankheitsende);
+        $stmt->execute();
+
+        echo "Krankheitsantrag erfolgreich eingetragen!";
+    } else {
+        echo "Der Krankheitseintrag konnte nicht eingetragen werden.";
+    }
+}
 
 function urlaubsgenehmigung($pid, $uid)
 {

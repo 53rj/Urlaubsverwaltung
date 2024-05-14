@@ -5,6 +5,11 @@ if ($_SESSION['status'] !== 'Admin') {
     exit;
 }
 
+if ($_SESSION['status'] !== 'Admin') {
+    echo "Zugriff verweigert!";
+    exit;
+}
+
 include $_SERVER['DOCUMENT_ROOT'] . '/php/Urlaubsverwaltung/f_function.php';
 ?>
 <!DOCTYPE html>
@@ -18,7 +23,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/php/Urlaubsverwaltung/f_function.php';
     <link rel="stylesheet" href="/php/Urlaubsverwaltung/style.css">
     <title>Datenbankeinträge bearbeiten</title>
 </head>
-<?php 
+<?php
 
 checkStatus();
 
@@ -39,7 +44,7 @@ try {
     $krankheit = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($krankheit) {
-        ?>
+?>
         <table border="1">
             <tr>
                 <th></th>
@@ -52,16 +57,16 @@ try {
             </tr>
             <td>
                 <form action="update_krankheit.php" method="post">
-                    <td><input type="number" id="kid" name="kid" value="<?= htmlspecialchars($kid); ?>" required></td>
-                    <td><input type="number" id="pid" name="pid" value="<?= htmlspecialchars($krankheit['pid']); ?>" required></td>
-                    <td><input type="date" id="kanfang" name="kanfang" value="<?= htmlspecialchars($krankheit['kanfang']); ?>" required></td>
-                    <td><input type="date" id="kende" name="kende" value="<?= htmlspecialchars($krankheit['kende']); ?>" required></td>
-                    <td><input type="number" id="kgesamt" name="kgesamt" value="<?= htmlspecialchars($krankheit['kgesamt']); ?>" required></td>
-                    <td><input type="submit" value="Aktualisieren">
+            <td><input type="number" id="kid" name="kid" value="<?= htmlspecialchars($kid); ?>" required></td>
+            <td><input type="number" id="pid" name="pid" value="<?= htmlspecialchars($krankheit['pid']); ?>" required></td>
+            <td><input type="date" id="kanfang" name="kanfang" value="<?= htmlspecialchars($krankheit['kanfang']); ?>" required></td>
+            <td><input type="date" id="kende" name="kende" value="<?= htmlspecialchars($krankheit['kende']); ?>" required></td>
+            <td><input type="number" id="kgesamt" name="kgesamt" value="<?= htmlspecialchars($krankheit['kgesamt']); ?>" required></td>
+            <td><input type="submit" value="Aktualisieren">
                 </form>
-            </tr>
+                </tr>
         </table>
-        <?php
+<?php
     } else {
         echo "Keine Daten gefunden.";
     }
