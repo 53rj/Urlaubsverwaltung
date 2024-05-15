@@ -3,6 +3,11 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
+if ($_SESSION['status'] !== 'Abteilungsleiter') {
+    echo "Zugriff verweigert!";
+    exit;
+}
+
 include_once "./meta.html";
 include_once './f_function.php';
 checkStatus();
@@ -10,7 +15,7 @@ checkStatus();
 <h1>Nicht bearbeitete Urlaubsanträge:</h1>
 
 <div class="container">
-    <table class="table">
+    <table class="table" id="ugenehmigung">
         <thead>
             <tr>
                 <th>Vorname</th>

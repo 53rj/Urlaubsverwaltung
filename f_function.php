@@ -189,8 +189,12 @@ function urlaubsantrag($pid, $urlaubsanfang, $urlaubsende)
         $stmt->bindParam(":uende", $urlaubsende);
         $stmt->execute();
 
+        echo "<br>";
+        echo "<br>";
         echo "Urlaubsantrag erfolgreich eingetragen!";
     } else {
+        echo "<br>";
+        echo "<br>";
         echo "Der Urlaubsantrag konnte nicht eingetragen werden.";
     }
 }
@@ -229,8 +233,12 @@ function krankheitseintrag($pid, $krankheitsanfang, $krankheitsende)
         $stmt->bindParam(":kende", $krankheitsende);
         $stmt->execute();
 
+        echo "<br>";
+        echo "<br>";
         echo "Krankheitsantrag erfolgreich eingetragen!";
     } else {
+        echo "<br>";
+        echo "<br>";
         echo "Der Krankheitseintrag konnte nicht eingetragen werden.";
     }
 }
@@ -283,14 +291,4 @@ function kommende_urlaube_anzeigen()
              </td>';
         echo "</tr>";
     }
-}
-
-function uidbekommen($pid, $uanfang, $uende)
-{
-    $pdo = connServer();
-    $stmt = $pdo->prepare("SELECT  uid FROM ulaubsantrag WHERE pid = :pid AND uende = :uende AND uanfang = :uanfang");
-    $stmt->bindParam(":pid", $pid);
-    $stmt->bindParam(":uanfang", $uanfang);
-    $stmt->bindParam(":uende", $uende);
-    $stmt->execute();
 }

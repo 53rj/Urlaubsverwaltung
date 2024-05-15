@@ -5,8 +5,10 @@ if (session_status() == PHP_SESSION_NONE) {
 
 include_once "./meta.html";
 include_once './f_function.php';
+
 checkStatus();
 connServer();
+
 if ($_SESSION['status'] !== 'Admin') {
     echo "Zugriff verweigert!";
     exit;

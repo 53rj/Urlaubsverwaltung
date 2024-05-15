@@ -22,6 +22,7 @@ $conn = connServer();
             <th>Beginn</th>
             <th>Ende</th>
             <th>Gesamt</th>
+            <th>Aktionen</th>
         </tr>
         <?php foreach ($krankheiten as $krankheit) : ?>
             <tr>
@@ -33,11 +34,11 @@ $conn = connServer();
                 <td>
                     <form action="./edit_krankheit.php" method="post" style="display: inline;">
                         <input type="hidden" name="kid" value="<?= $krankheit['kid']; ?>">
-                        <input type="submit" value="Bearbeiten">
+                        <input type="submit" id="edit" value="Bearbeiten">
                     </form>
                     <form action="./delete_eintrag.php" method="post" style="display: inline;">
                         <input type="hidden" name="kid" value="<?= $krankheit['kid']; ?>">
-                        <input type="submit" value="Löschen" onclick="return confirm('Sind Sie sicher, dass Sie diesen Krankheitseintag möchten?');">
+                        <input type="submit" id="delete" value="Löschen" onclick="return confirm('Sind Sie sicher, dass Sie diesen Krankheitseintag möchten?');">
                     </form>
                 </td>
             </tr>

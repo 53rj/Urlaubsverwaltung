@@ -24,6 +24,7 @@ $conn = connServer();
             <th>Tage beantragt</th>
             <th>Gesamturlaubstage</th>
             <th>Status</th>
+            <th>Aktionen</th>
         </tr>
         <?php foreach ($antraege as $antrag) : ?>
             <tr>
@@ -37,11 +38,11 @@ $conn = connServer();
                 <td>
                     <form action="./edit_urlaubsantrag.php" method="post" style="display: inline;">
                         <input type="hidden" name="uid" value="<?= $antrag['uid']; ?>">
-                        <input type="submit" value="Bearbeiten">
+                        <input type="submit" id="edit" value="Bearbeiten">
                     </form>
                     <form action="./delete_eintrag.php" method="post" style="display: inline;">
                         <input type="hidden" name="uid" value="<?= $antrag['uid']; ?>">
-                        <input type="submit" value="Löschen" onclick="return confirm('Sind Sie sicher, dass Sie diesen Urlaubsantrag löschen möchten?');">
+                        <input type="submit" id="delete" value="Löschen" onclick="return confirm('Sind Sie sicher, dass Sie diesen Urlaubsantrag löschen möchten?');">
                     </form>
                 </td>
             </tr>

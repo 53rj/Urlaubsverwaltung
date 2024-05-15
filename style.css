@@ -10,69 +10,13 @@ body {
     flex-direction: column;
 }
 
-header {
-    background-image: url('grafik.png');
-    background-size: cover; 
-    background-position: center; 
-    background-repeat: no-repeat; 
-    color: white;
-    padding: 10px 0;
-}
 
-.header-content {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 10px;
-    position: relative;
-}
-
-.header-content h1 {
-    font-size: 24px;
-    margin: 0;
-}
-
-.header-links {
-    position: absolute;
-    top: 10px; 
-    right: 10px; 
-    display: flex;
-}
-
-.header-link:hover {
-    color: #24aa24;
-}
-
-.header-link {
-    text-decoration: none;
-    color: #000000;
-    font-size: 18px;
-    padding: 10px;
-    margin-left: 10px;
-    display: flex;
-    align-items: center;
-    transition: all 0.3s ease;
-}
-
-.header-content .logo {
-    margin-right: 20px;
-    height: 50px; 
-}
-
-.header .logo {
-    margin-right: 20px;
-    height: 50px; 
-}
-
-.header-icon {
-    margin-right: 8px;
-    height: 24px; 
-}
 
 .container {
-    display: grid;
-    grid-template-columns: 200px 1000px 200px;
-    grid-template-rows: 130px 60px auto auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
 }
 
 .content {
@@ -86,7 +30,7 @@ header {
     align-items: center;
     justify-content: center;
     padding: 20px;
-    min-height: 600px; 
+    min-height: 600px;
 }
 
 .footer {
@@ -173,8 +117,6 @@ header {
 }
 
 
-
-
 /* --------------------------------------------------------------------------- */
 /* ------------------------------Kalender------------------------------------- */
 /* --------------------------------------------------------------------------- */
@@ -217,11 +159,53 @@ header {
     height: 40px;
     width: 220px;
     cursor: pointer;
-    -webkit-transition: all 0.3s ease;
-    -moz-transition: all 0.3s ease;
-    -o-transition: all 0.3s ease;
-    -ms-transition: all 0.3s ease;
-    transition: all 0.3s ease;
+}
+
+#aurlaub, #eurlaub, #krankheit, #ekrankheit {
+    width: calc(50% - 10px); 
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #6F67DA;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.calendar-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px; 
+}
+
+.calendar-label {
+    display: block;
+    color: #6F67DA;
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#aurlaub:hover, #eurlaub:hover, #akrankheit:hover, #ekrankheit:hover {
+    border-color: #A6DDEE;
+}
+
+#pid_eintrag {
+    width: 200px; 
+    padding: 10px; 
+    margin: 5px 0; 
+    border: 1px solid #6F67DA;
+    box-sizing: border-box; 
+    color: #000000; 
+}
+
+#pid_label {
+    font-weight: bold;
+    color: #6F67DA;
+    white-space: nowrap;
+    justify-content: center;
+    display: flex;
+    align-items: center; 
+    margin-right: 10px; 
+    
 }
 
 /* --------------------------------------------------------------------------- */
@@ -230,22 +214,48 @@ header {
 
 .form-row {
     display: flex;
-    align-items: center;
-    margin-bottom: 10px;
+    flex-wrap: wrap;
+    flex-direction:column;
+    gap: 10px;
+    margin-bottom: 15px;
+    white-space: nowrap;
 }
 
 .form-row > div {
-    margin-right: 20px;
+    flex: 1 1 calc(50% - 10px); /* Each input field takes half the width minus some space for gap */
+    min-width: 150px;
 }
 
 .form-row label {
-    margin-right: 10px;
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #6F67DA;
 }
 
 input[type="text"],
 input[type="password"],
+input[type="date"],
+input[type="int"],
 select {
-    min-width: 150px;
+    width: 200px; 
+    padding: 10px; 
+    margin: 5px 0; 
+    border: 1px solid #6F67DA;
+    border-radius: 4px; 
+    box-sizing: border-box; 
+    color: #000000; 
+}
+
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+#registrationForm div[style="text-align: center;"] {
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 /* --------------------------------------------------------------------------- */
@@ -265,6 +275,25 @@ select {
     box-sizing: border-box;
 }
 
+#edit {
+    background-color: #007bff;
+    color: #ffffff;
+    transition: background-color 0.3s ease;
+}
+
+#edit:hover {
+    background-color: #0056b3;
+}
+
+#delete {
+    background-color: #dc3545;
+    color: #ffffff;
+    transition: background-color 0.3s ease;
+}
+
+#delete:hover {
+    background-color: #a71d2a;
+}
 .btn-allow {
     background-color: #4CAF50;
     width: 100px;
@@ -277,6 +306,22 @@ select {
 
 .btn:hover {
     opacity: 0.8;
+}
+
+#submit_uantrag, #submit_keintrag {
+    width: 100%;
+    padding: 10px;
+    background-color: #6F67DA;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: all 0.3s ease;
+}
+
+#submit_uantrag:hover, #submit_keintrag:hover {
+    background-color: #0056b3;
 }
 
 /* --------------------------------------------------------------------------- */
@@ -473,4 +518,172 @@ section h2 {
 
 #utage tr:nth-child(odd) {
     background-color: #ffffff; 
+}
+
+/* --------------------------------------------------------------------------- */
+/* ----------------------------------Header----------------------------------- */
+/* --------------------------------------------------------------------------- */
+
+header {
+    background-image: url('grafik.png');
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat; 
+    color: white;
+    padding: 10px 0;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.header-content h1 {
+    font-size: 24px;
+    margin: 0;
+}
+
+.header-links {
+    position: absolute;
+    top: 10px; 
+    right: 10px; 
+    display: flex;
+}
+
+.header-link:hover {
+    color: #24aa24;
+}
+
+.header-link {
+    text-decoration: none;
+    color: #000000;
+    font-size: 18px;
+    padding: 10px;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.header-content .logo {
+    margin-right: 20px;
+    height: 50px; 
+}
+
+.header .logo {
+    margin-right: 20px;
+    height: 50px; 
+}
+
+.header-icon {
+    margin-right: 8px;
+    height: 24px; 
+}
+
+/* --------------------------------------------------------------------------- */
+/* ---------------------------------Tabellen---------------------------------- */
+/* --------------------------------------------------------------------------- */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 16px;
+    text-align: left;
+}
+
+table th, table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+}
+
+table th {
+    background-color: #6F67DA;
+    color: #ffffff;
+}
+
+table tr:nth-child(even) {
+    background-color: #f3f3f3;
+}
+
+table tr:hover {
+    background-color: #f1f1f1;
+}
+
+table td form {
+    display: inline;
+}
+
+table input[type="submit"] {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 0 5px;
+}
+
+#ugenehmigung {
+    width: 100%;
+    max-width: 800px; /* Set a max-width for larger screens */
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 16px;
+    text-align: left;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px; /* Optional: add rounded corners */
+}
+
+#ugenehmigung th,
+#ugenehmigung td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+}
+
+#ugenehmigung th {
+    background-color: #6F67DA;
+    color: #ffffff;
+}
+
+#ugenehmigung tr:nth-child(even) {
+    background-color: #f3f3f3;
+}
+
+#ugenehmigung tr:hover {
+    background-color: #f1f1f1;
+}
+
+#ugenehmigung td form {
+    display: inline;
+}
+
+#ugenehmigung input[type="submit"] {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 0 5px;
+}
+
+#ugenehmigung input[type="submit"].edit {
+    background-color: #007bff;
+    color: #ffffff;
+    transition: background-color 0.3s ease;
+}
+
+#ugenehmigung input[type="submit"].edit:hover {
+    background-color: #0056b3;
+}
+
+#ugenehmigung input[type="submit"].delete {
+    background-color: #dc3545;
+    color: #ffffff;
+    transition: background-color 0.3s ease;
+}
+
+#ugenehmigung input[type="submit"].delete:hover {
+    background-color: #a71d2a;
 }

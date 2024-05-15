@@ -23,6 +23,7 @@ $conn = connServer();
             <th>Status</th>
             <th>Resturlaub</th>
             <th>Urlaubstage</th>
+            <th>Aktionen</th>
         </tr>
         <?php foreach ($users as $user) : ?>
             <tr>
@@ -35,11 +36,11 @@ $conn = connServer();
                 <td>
                     <form action="./edit_user.php" method="post" style="display: inline;">
                         <input type="hidden" name="pid" value="<?= $user['pid']; ?>">
-                        <input type="submit" value="Bearbeiten">
+                        <input type="submit" id="edit" value="Bearbeiten">
                     </form>
                     <form action="./delete_eintrag.php" method="post" style="display: inline;">
                         <input type="hidden" name="pid" value="<?= $user['pid']; ?>">
-                        <input type="submit" value="Löschen" onclick="return confirm('Sind Sie sicher, dass Sie diesen Benutzer löschen möchten?');">
+                        <input type="submit" id="delete" value="Löschen" onclick="return confirm('Sind Sie sicher, dass Sie diesen Benutzer löschen möchten?');">
                     </form>
                 </td>
             </tr>

@@ -3,14 +3,15 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-include_once "./meta.html";
-include_once './f_function.php';
-
-checkStatus();
 if ($_SESSION['status'] !== 'Admin') {
     echo "Zugriff verweigert!";
     exit;
 }
+
+include_once "./meta.html";
+include_once './f_function.php';
+
+checkStatus();
 
 try {
     $conn = connServer();
